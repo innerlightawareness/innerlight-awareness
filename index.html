@@ -860,7 +860,7 @@
         recipientEmail: 'innerlightbackend@gmail.com'   // Where owner notifications go
       };
       document.getElementById('testStripeBtn').addEventListener('click', () => {
-        const TEST_PRICE_ID = 'prod_UOfiQCTVPvTfC9'; // Replace with a real test price ID from your Stripe dashboard
+        const TEST_PRICE_ID = 'price_1TPs9i3Cffh4uMO5PO5YvVaQ'; // Replace with a real test price ID from your Stripe dashboard
         stripe.redirectToCheckout({
           lineItems: [{ price: TEST_PRICE_ID, quantity: 1 }],
           mode: 'payment',
