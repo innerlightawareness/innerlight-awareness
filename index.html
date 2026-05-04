@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,40 +8,55 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+    rel="stylesheet">
   <script src="https://js.stripe.com/v3/"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
   <style>
     /* ----- COLOR THEME & BASE ----- */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
     }
 
     body {
-      background-color: #f4f7f0;  /* Slightly lighter off-white/sage */
-      color: #2c3e3f; 
+      /* Soft textured sage background from the image */
+      background-color: #dbe2d1;
+      color: #2a3328;
       line-height: 1.6;
       overflow-x: hidden;
+      font-family: 'Inter', 'Helvetica Neue', sans-serif;
     }
 
     :root {
-      --purple: #7b4b9a;        
-      --purple-light: #9b6eb3;
-      --sage: #9caf88;          
-      --sage-light: #c2d0b3;
-      --sage-pale: #e6ece0;
-      --charcoal: #2c3e3f;      
-      --yellow: #f6c445;        
-      --yellow-light: #f8d879;
-      --shadow-hard: 8px 8px 0px var(--sage-light); /* Fancy offset shadow */
-      --shadow-soft: 0 12px 40px rgba(0, 0, 0, 0.05);
+      /* New Palette based on the image */
+      --sage-bg: #dbe2d1;
+      --sage-dark: #8a9c78;
+      --text-dark: #2a3328;
+      /* Deep olive/charcoal */
+      --gold: #b39b62;
+      /* Zodiac chart/star accent */
+      --gold-light: #d4c59a;
+      --cream: #f4f3ed;
+      --plum: #6b4c7b;
+      /* Candle/fabric tone */
+
+      /* Replaced brutalist shadows with soft, elegant glows */
+      --shadow-soft: 0 12px 40px rgba(42, 51, 40, 0.08);
+      --shadow-hover: 0 15px 50px rgba(42, 51, 40, 0.12);
     }
 
-    h1, h2, h3 {
-      font-weight: 600;
-      letter-spacing: -0.03em;
+    /* Elegant Serif for headings matching the main banner text */
+    h1,
+    h2,
+    h3,
+    .logo {
+      font-family: 'Playfair Display', 'Cormorant Garamond', 'Georgia', serif;
+      font-weight: 400;
+      letter-spacing: 0.02em;
     }
 
     .container {
@@ -51,15 +67,15 @@
 
     /* ----- HEADER ----- */
     .site-header {
-      background-color: var(--white-off);
-      color: var(--charcoal);
+      background-color: var(--cream);
+      color: var(--text-dark);
       padding: 1.2rem 0;
       position: sticky;
       top: 0;
       z-index: 30;
-      border-bottom: 1px solid var(--sage-light);
+      border-bottom: 1px solid var(--gold-light);
       backdrop-filter: blur(10px);
-      background: rgba(244, 247, 240, 0.9);
+      background: rgba(244, 243, 237, 0.85);
     }
 
     .header-inner {
@@ -70,68 +86,78 @@
     }
 
     .logo {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--charcoal);
+      font-size: 2rem;
+      color: var(--text-dark);
       display: inline-block;
-      letter-spacing: -0.05em;
     }
+
     .logo span {
-      color: var(--purple);
+      color: var(--gold);
       font-style: italic;
     }
 
     .nav-links {
       display: flex;
       gap: 2.5rem;
-      font-weight: 500;
-      font-size: 0.95rem;
+      font-weight: 400;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
     }
+
     .nav-links a {
-      color: var(--charcoal);
+      color: var(--text-dark);
       text-decoration: none;
       transition: 0.3s;
       position: relative;
     }
+
     .nav-links a:hover {
-      color: var(--purple);
+      color: var(--gold);
     }
+
     .nav-links a::after {
       content: '';
       position: absolute;
       bottom: -4px;
       left: 0;
       width: 0%;
-      height: 2px;
-      background: var(--yellow);
-      transition: 0.3s;
+      height: 1px;
+      background: var(--gold);
+      transition: 0.4s ease;
     }
+
     .nav-links a:hover::after {
       width: 100%;
     }
 
     .cart-icon {
-      border: 1px solid var(--charcoal);
+      border: 1px solid var(--gold);
       padding: 0.5rem 1.2rem;
       border-radius: 50px;
       display: flex;
       align-items: center;
       gap: 0.6rem;
       cursor: pointer;
-      transition: 0.3s;
-      font-weight: 600;
-    }
-    .cart-icon:hover {
-      background: var(--charcoal);
-      color: white;
-      box-shadow: 4px 4px 0 var(--yellow);
-    }
-    .cart-count {
-      background: var(--yellow);
-      color: var(--charcoal);
-      border-radius: 50px;
-      padding: 0.1rem 0.5rem;
+      transition: 0.4s ease;
+      font-weight: 400;
       font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .cart-icon:hover {
+      background: var(--gold);
+      color: var(--cream);
+    }
+
+    .cart-count {
+      color: var(--gold);
+      font-size: 0.85rem;
+    }
+
+    .cart-icon:hover .cart-count {
+      color: var(--cream);
     }
 
     /* ----- SECTIONS & TYPOGRAPHY ----- */
@@ -140,61 +166,88 @@
     }
 
     .section-title {
-      font-size: 2.8rem;
+      font-size: 3rem;
       margin-bottom: 1rem;
       position: relative;
-      border-left: 4px solid var(--purple);
-      padding-left: 1.5rem;
-      line-height: 1.1;
-    }
-    
-    .section-subtitle {
-      font-size: 1.1rem;
-      color: #5a6b6b;
-      margin-left: 1.8rem; /* Aligns with the bordered title */
-      max-width: 600px;
-      margin-bottom: 3rem;
+      text-align: center;
+      color: var(--text-dark);
     }
 
-    /* ----- HERO / WELCOME (Asymmetrical layout) ----- */
+    /* Replaced chunky side border with an elegant center divider matching the image */
+    .section-title::after {
+      content: '✦';
+      display: block;
+      font-size: 1.2rem;
+      color: var(--gold);
+      margin: 1rem auto;
+      position: relative;
+    }
+
+    .section-title::before {
+      content: '';
+      position: absolute;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150px;
+      height: 1px;
+      background: var(--gold-light);
+      z-index: -1;
+    }
+
+    .section-subtitle {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--sage-dark);
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 4rem;
+    }
+
+    /* ----- HERO / WELCOME ----- */
     .hero-wrapper {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 4rem;
       align-items: center;
     }
+
     .hero-text {
       padding-right: 2rem;
     }
+
     .hero-text h1 {
-      font-size: 3.5rem;
+      font-size: 4rem;
       line-height: 1.1;
       margin-bottom: 1.5rem;
-      color: var(--charcoal);
-    }
-    .hero-text h1 span {
-      color: var(--purple);
-      display: block;
-      font-style: italic;
-    }
-    .hero-accent-box {
-      border: 1px solid var(--sage);
-      padding: 3rem;
-      border-radius: 0 100px 0 100px; /* Fancy opposing corners */
-      background: white;
-      box-shadow: var(--shadow-hard);
-      position: relative;
-    }
-    .hero-accent-box::before {
-      content: '✧';
-      font-size: 3rem;
-      color: var(--yellow);
-      position: absolute;
-      top: -20px;
-      left: -20px;
+      color: var(--text-dark);
     }
 
-    /* ----- OFFERING GRID & CARDS (Editorial Style) ----- */
+    .hero-text h1 span {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .hero-accent-box {
+      border: 1px solid var(--gold-light);
+      padding: 3.5rem;
+      background: var(--cream);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      border-radius: 8px;
+    }
+
+    .hero-accent-box::before {
+      content: '✧';
+      font-size: 2.5rem;
+      color: var(--gold);
+      position: absolute;
+      top: -15px;
+      left: -15px;
+    }
+
+    /* ----- OFFERING GRID & CARDS ----- */
     .offerings-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -202,154 +255,150 @@
     }
 
     .offering-card {
-      background: transparent;
-      border: 1px solid var(--charcoal);
-      border-radius: 12px;
-      transition: all 0.3s ease;
+      background: var(--cream);
+      border: 1px solid rgba(179, 155, 98, 0.3);
+      /* Subtle gold border */
+      border-radius: 8px;
+      transition: all 0.4s ease;
       display: flex;
       flex-direction: column;
       position: relative;
-      background: white;
     }
+
     .offering-card:hover {
-      transform: translate(-4px, -4px);
-      box-shadow: 8px 8px 0px var(--sage); /* Hard offset shadow */
-      border-color: var(--sage);
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--gold);
     }
 
     .img-arch-wrapper {
-      padding: 1rem 1rem 0 1rem;
+      padding: 1.5rem 1.5rem 0 1.5rem;
     }
+
+    /* Kept the arch as it fits the astrological/tarot aesthetic */
     .offering-img {
       width: 100%;
-      height: 220px;
+      height: 250px;
       object-fit: cover;
-      border-radius: 150px 150px 0 0; /* Arched window look */
-      border: 1px solid var(--sage-light);
+      border-radius: 150px 150px 0 0;
+      border: 1px solid var(--gold-light);
     }
 
     .offering-content {
-      padding: 1.5rem;
+      padding: 2rem 1.5rem;
       display: flex;
       flex-direction: column;
       flex: 1;
+      text-align: center;
     }
 
     .offering-title {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--charcoal);
-      margin-bottom: 0.5rem;
-      border-bottom: 1px dashed var(--sage);
-      padding-bottom: 0.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--text-dark);
+      margin-bottom: 0.8rem;
     }
 
     .offering-desc {
-      color: #5a6b6b;
+      color: var(--sage-dark);
       font-size: 0.95rem;
       margin: 0.5rem 0 1.5rem;
       flex: 1;
     }
 
-    /* Details section hidden by default */
     .offering-details {
-      display: none; 
+      display: none;
       margin-top: 1rem;
       padding-top: 1rem;
-      border-top: 1px solid var(--sage-light);
-      animation: fadeIn 0.4s ease;
+      border-top: 1px solid var(--gold-light);
+      animation: fadeIn 0.5s ease;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-5px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(-5px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .offering-price {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--purple);
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--gold);
       margin: 0.5rem 0;
     }
+
     .offering-price small {
-      font-size: 0.9rem;
-      font-weight: 400;
-      color: var(--charcoal);
-    }
-
-    .date-picker {
-      margin: 1rem 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-    .date-picker label {
-      font-size: 0.85rem;
-      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      color: var(--sage-dark);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--charcoal);
-    }
-    .date-picker input {
-      padding: 0.6rem;
-      border: 1px solid var(--charcoal);
-      background: var(--sage-pale);
-      font-size: 0.95rem;
-      outline: none;
-      transition: 0.2s;
-    }
-    .date-picker input:focus {
-      border-color: var(--purple);
-      background: white;
+      letter-spacing: 0.1em;
     }
 
-    /* Buttons */
+    /* ----- BUTTONS ----- */
     .btn {
-      background: var(--charcoal);
-      color: white;
-      border: 1px solid var(--charcoal);
-      padding: 0.8rem 1.4rem;
-      font-weight: 500;
+      background: transparent;
+      color: var(--text-dark);
+      border: 1px solid var(--text-dark);
+      padding: 0.8rem 2rem;
+      font-weight: 400;
       cursor: pointer;
-      transition: all 0.2s ease;
-      font-size: 1rem;
+      transition: all 0.4s ease;
+      font-size: 0.85rem;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.15em;
+      border-radius: 2px;
     }
+
     .btn:hover {
-      box-shadow: 4px 4px 0 var(--yellow);
-      transform: translate(-2px, -2px);
+      background: var(--text-dark);
+      color: var(--cream);
     }
+
     .btn-yellow {
-      background: var(--yellow);
-      color: var(--charcoal);
-      border-color: var(--charcoal);
+      /* Repurposed classes to fit new theme */
+      background: var(--gold);
+      color: var(--cream);
+      border-color: var(--gold);
     }
+
     .btn-purple {
-      background: var(--purple);
-      border-color: var(--purple);
+      background: var(--plum);
+      color: var(--cream);
+      border-color: var(--plum);
     }
+
+    .btn-yellow:hover,
     .btn-purple:hover {
-      box-shadow: 4px 4px 0 var(--sage);
-    }
-    .btn-outline {
       background: transparent;
-      color: var(--charcoal);
-      border: 1px solid var(--charcoal);
+      color: var(--gold);
     }
+
+    .btn-outline {
+      border: 1px solid var(--gold);
+      color: var(--gold);
+    }
+
     .btn-outline:hover {
-      background: var(--sage-pale);
-      box-shadow: 4px 4px 0 var(--purple-light);
+      background: var(--gold);
+      color: var(--cream);
     }
+
     .btn-block {
       width: 100%;
     }
 
-    /* ----- ABOUT US (Overlapping Layout) ----- */
+    /* ----- ABOUT US ----- */
     .about-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -357,210 +406,178 @@
       gap: 2rem;
       padding-top: 2rem;
     }
-    .about-img-box {
-      position: relative;
-    }
+
     .about-img-box img {
       width: 100%;
-      height: 450px;
+      height: 500px;
       object-fit: cover;
-      border: 1px solid var(--charcoal);
-      box-shadow: var(--shadow-hard);
-    }
-    .about-text-box {
-      background: white;
-      border: 1px solid var(--charcoal);
-      padding: 3rem;
-      margin-left: -10%; /* Creates the overlap */
-      position: relative;
-      z-index: 2;
+      border-radius: 200px 200px 0 0;
+      /* Arched style */
       box-shadow: var(--shadow-soft);
     }
-    .about-text-box p {
-      font-size: 1.15rem;
-      margin-bottom: 1rem;
-      color: #334444;
+
+    .about-text-box {
+      background: var(--cream);
+      padding: 4rem;
+      margin-left: -15%;
+      position: relative;
+      z-index: 2;
+      box-shadow: var(--shadow-hover);
+      border: 1px solid var(--gold-light);
     }
 
-    /* ----- TESTIMONIALS (Staggered Grid) ----- */
+    .about-text-box p {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-dark);
+    }
+
+    /* ----- TESTIMONIALS ----- */
     .testimonials-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
+      gap: 2.5rem;
       align-items: start;
     }
+
     .testimonial {
-      background: white;
-      border: 1px solid var(--sage);
-      padding: 2.5rem;
+      background: var(--cream);
+      border: 1px solid var(--gold-light);
+      padding: 3rem 2rem;
       position: relative;
-      transition: 0.3s;
-    }
-    .testimonial:hover {
-      border-color: var(--purple);
-      box-shadow: var(--shadow-hard);
-    }
-    /* Stagger the middle card down */
-    .testimonial:nth-child(2) {
-      margin-top: 3rem; 
-    }
-    .testimonial i {
-      color: var(--yellow);
-      font-size: 1.8rem;
-      position: absolute;
-      top: -15px;
-      left: 20px;
-      background: var(--white-off);
-      padding: 0 10px;
-    }
-    .testimonial p {
-      font-size: 1.05rem;
-      font-style: italic;
-      color: var(--charcoal);
-      margin-top: 0.5rem;
-    }
-    .testimonial h4 {
-      margin-top: 1.5rem;
-      color: var(--purple);
-      font-weight: 600;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
+      transition: 0.4s;
+      text-align: center;
+      border-radius: 4px;
     }
 
-    /* ----- CONTACT SECTION (Two Column) ----- */
+    .testimonial:hover {
+      border-color: var(--gold);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .testimonial:nth-child(2) {
+      margin-top: 3rem;
+    }
+
+    .testimonial i {
+      color: var(--gold);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .testimonial p {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--text-dark);
+    }
+
+    .testimonial h4 {
+      margin-top: 2rem;
+      color: var(--gold);
+      font-weight: 400;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    /* ----- CONTACT SECTION ----- */
     .contact-layout {
       display: grid;
       grid-template-columns: 1fr 1.5fr;
       gap: 4rem;
     }
-    .contact-info {
-      padding-top: 1rem;
-    }
+
     .contact-form {
-      background: white;
-      padding: 3rem;
-      border: 1px solid var(--charcoal);
-      box-shadow: -8px 8px 0 var(--sage-light); /* Shadow on the left */
+      background: var(--cream);
+      padding: 4rem;
+      border: 1px solid var(--gold-light);
+      box-shadow: var(--shadow-soft);
+      border-radius: 4px;
     }
+
     .form-group {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.8rem;
     }
-    .form-group input, 
+
+    .form-group input,
     .form-group textarea {
       width: 100%;
       padding: 1rem;
-      border: 1px solid var(--sage);
-      background: var(--white-off);
+      border: none;
+      border-bottom: 1px solid var(--sage-dark);
+      background: transparent;
       font-size: 1rem;
       transition: 0.3s;
+      color: var(--text-dark);
     }
-    .form-group textarea {
-      resize: vertical;
-    }
-    .form-group input:focus, 
+
+    .form-group input:focus,
     .form-group textarea:focus {
-      border-color: var(--purple);
-      background: white;
+      border-color: var(--gold);
       outline: none;
-      box-shadow: inset 4px 4px 0 var(--sage-pale);
     }
 
     /* ----- FOOTER ----- */
     .site-footer {
-      background: var(--charcoal);
-      color: var(--white-off);
+      background: var(--text-dark);
+      color: var(--cream);
       text-align: center;
-      padding: 3rem 1rem;
-      border-top: 4px solid var(--purple);
+      padding: 4rem 1rem;
+      border-top: 1px solid var(--gold);
     }
 
     /* ----- MODALS ----- */
     .modal-overlay {
       position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(44, 62, 63, 0.6); 
-      backdrop-filter: blur(6px);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(42, 51, 40, 0.8);
+      backdrop-filter: blur(8px);
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 100;
       opacity: 0;
       visibility: hidden;
-      transition: 0.3s ease;
+      transition: 0.4s ease;
     }
+
     .modal-overlay.active {
       opacity: 1;
       visibility: visible;
     }
 
     .modal {
-      background: white;
+      background: var(--cream);
       max-width: 500px;
       width: 90%;
-      padding: 3rem;
-      border: 1px solid var(--charcoal);
-      box-shadow: 12px 12px 0 var(--purple-light);
+      padding: 3.5rem;
+      border: 1px solid var(--gold);
       position: relative;
       max-height: 90vh;
       overflow-y: auto;
+      border-radius: 4px;
     }
+
     .modal .close-btn {
       position: absolute;
       top: 1rem;
       right: 1.5rem;
       font-size: 2rem;
       cursor: pointer;
-      color: var(--charcoal);
-      transition: 0.2s;
+      color: var(--sage-dark);
+      transition: 0.3s;
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
     }
+
     .modal .close-btn:hover {
-      color: var(--purple);
+      color: var(--text-dark);
       transform: rotate(90deg);
-    }
-
-    /* Cart Specifics */
-    .cart-items {
-      list-style: none;
-      margin: 2rem 0;
-    }
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px dashed var(--sage);
-      padding: 1rem 0;
-    }
-    .cart-item-info strong {
-      font-size: 1.1rem;
-    }
-    .cart-item-price {
-      font-weight: 700;
-      color: var(--purple);
-      margin-right: 1rem;
-      font-size: 1.2rem;
-    }
-    .remove-item {
-      background: none;
-      border: none;
-      color: var(--charcoal);
-      cursor: pointer;
-      font-size: 1.1rem;
-    }
-    .remove-item:hover { color: red; }
-    .cart-total {
-      font-size: 1.6rem;
-      font-weight: 700;
-      text-align: right;
-      color: var(--charcoal);
-      margin: 1.5rem 0;
-    }
-
-    #card-element {
-      background: var(--white-off);
-      border: 1px solid var(--sage);
-      padding: 1rem;
-      margin: 1.5rem 0;
     }
 
     /* ----- FLOATING BUTTON ----- */
@@ -568,296 +585,388 @@
       position: fixed;
       bottom: 30px;
       right: 30px;
-      background: var(--charcoal);
-      color: var(--yellow);
-      border: 1px solid var(--yellow);
-      border-radius: 0; /* Boxy edge */
-      padding: 1rem 1.5rem;
-      font-weight: 600;
-      font-size: 1rem;
-      box-shadow: 6px 6px 0 var(--yellow);
+      background: var(--cream);
+      color: var(--text-dark);
+      border: 1px solid var(--gold);
+      padding: 1rem 2rem;
+      font-weight: 400;
+      font-size: 0.85rem;
+      box-shadow: var(--shadow-soft);
       cursor: pointer;
       z-index: 40;
       display: flex;
       align-items: center;
       gap: 0.8rem;
-      transition: 0.2s;
+      transition: 0.4s ease;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.1em;
+      border-radius: 50px;
     }
+
     .floating-consult:hover {
-      background: var(--yellow);
-      color: var(--charcoal);
-      border-color: var(--charcoal);
-      transform: translate(-2px, -2px);
-      box-shadow: 8px 8px 0 var(--charcoal);
+      background: var(--gold);
+      color: var(--cream);
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
     }
 
     /* ----- RESPONSIVE ----- */
     @media (max-width: 900px) {
-      .hero-wrapper, .about-layout, .contact-layout {
+
+      .hero-wrapper,
+      .about-layout,
+      .contact-layout {
         grid-template-columns: 1fr;
       }
+
       .testimonials-grid {
         grid-template-columns: 1fr;
       }
+
       .testimonial:nth-child(2) {
         margin-top: 0;
       }
+
       .about-text-box {
         margin-left: 0;
-        margin-top: -2rem;
+        margin-top: -3rem;
       }
+
+      .hero-text h1 {
+        font-size: 3rem;
+      }
+
       .section-title {
-        font-size: 2.2rem;
+        font-size: 2.5rem;
       }
     }
   </style>
 </head>
+
 <body>
 
-<header class="site-header">
-  <div class="container header-inner">
-    <div class="logo">Innerlight<span>Awareness</span></div>
-    <nav class="nav-links">
-      <a href="#offerings">Offerings</a>
-      <a href="#about">Our Space</a>
-      <a href="#testimonials">Experiences</a>
-      <a href="#contact">Connect</a>
-    </nav>
-    <div class="cart-icon" id="cartIcon">
-      <i class="fas fa-shopping-cart"></i>
-      <span class="cart-count" id="cartCount">0</span>
-    </div>
-  </div>
-</header>
-
-<main>
-  <section id="welcome" style="padding-top: 4rem;">
-    <div class="container hero-wrapper">
-      <div class="hero-text">
-        <h1>Awaken to Your <br><span>Highest Self</span></h1>
-        <p style="font-size: 1.15rem; color: #5a6b6b; margin-bottom: 2rem;">
-          Whether you are taking your first steps into mindfulness or deepening a lifelong practice, you have arrived at the right place. Take a deep breath, release the outside world, and explore the paths we have prepared for your soul's growth.
-        </p>
-        <a href="#offerings" class="btn btn-purple">Explore Journeys <i class="fas fa-arrow-down"></i></a>
-      </div>
-      <div class="hero-accent-box">
-        <p style="font-size: 1.25rem; font-style: italic; color: var(--charcoal); line-height: 1.8;">
-          "The journey of a thousand miles begins with a single, mindful breath in the present moment."
-        </p>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">Innerlight <span>Awareness</span> </div>
+      <nav class="nav-links">
+        <a href="#offerings">Offerings</a>
+        <a href="#about">Our Space</a>
+        <a href="#testimonials">Experiences</a>
+        <a href="#contact">Connect</a>
+      </nav>
+      <div class="cart-icon" id="cartIcon">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count" id="cartCount">0</span>
       </div>
     </div>
-  </section>
+  </header>
 
-  <section id="offerings" style="background: white; border-top: 1px solid var(--sage-pale); border-bottom: 1px solid var(--sage-pale);">
-    <div class="container">
-      <h2 class="section-title">Curated Offerings</h2>
-      <p class="section-subtitle">Discover transformative journeys designed to help you reconnect and realign.</p>
-      <div class="offerings-grid" id="offeringsGrid">
+  <main>
+    <section id="welcome" style="padding-top: 4rem;">
+      <div class="container hero-wrapper">
+        <div class="hero-text">
+          <h1>Awaken to Your <br><span>Highest Self</span></h1>
+          <p style="font-size: 1.15rem; color: #5a6b6b; margin-bottom: 2rem;">
+            Whether you are taking your first steps into mindfulness or deepening a lifelong practice, you have arrived
+            at the right place. Take a deep breath, release the outside world, and explore the paths we have prepared
+            for your soul's growth.
+          </p>
+          <a href="#offerings" class="btn btn-purple">Explore Journeys <i class="fas fa-arrow-down"></i></a>
         </div>
-    </div>
-  </section>
-
-  <section id="about">
-    <div class="container">
-      <h2 class="section-title">A Space for Growth</h2>
-      <div class="about-layout">
-        <div class="about-img-box">
-          <img src="images/AdobeStock_907031279.jpeg" alt="Person meditating by the ocean">
-        </div>
-        <div class="about-text-box">
-          <p>Welcome to Innerlight Awareness. We believe that true growth happens when you are held in a supportive, loving environment. Our offerings are carefully curated to provide practical guidance on your spiritual awakening journey.</p>
-          <p>With lifetime access, live community support, and dedicated mentors, you are never walking this path alone. The light within us honors the light within you.</p>
+        <div class="hero-accent-box">
+          <p style="font-size: 1.25rem; font-style: italic; color: var(--charcoal); line-height: 1.8;">
+            Your life is not random. It is patterned, timed, and trying to show you something.
+          </p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="testimonials" style="background: var(--sage-pale);">
-    <div class="container">
-      <h2 class="section-title">Voices of Awakening</h2>
-      <p class="section-subtitle">Real experiences from souls walking the path alongside you.</p>
-      
-      <div class="testimonials-grid">
-        <div class="testimonial">
-          <i class="fas fa-quote-left"></i>
-          <p>"The Meditation Foundations offering changed my daily life. I finally feel grounded, and the environment here brings me peace every time I return."</p> 
-          <h4>Elena R.</h4>
-        </div>
-        <div class="testimonial">
-          <i class="fas fa-quote-left"></i>
-          <p>"The Chakra Balancing workshop was intense but incredibly healing. I feel a renewed sense of energy and purpose. Thank you, SoulHarbor."</p> 
-          <h4>Marcus T.</h4>
-        </div>
-        <div class="testimonial">
-          <i class="fas fa-quote-left"></i>
-          <p>"I took the Intuitive Healing masterclass and it felt like coming home. The mentors truly care, and the space feels so intentionally designed."</p> 
-          <h4>Sarah J.</h4>
+    <section id="offerings"
+      style="background: white; border-top: 1px solid var(--sage-pale); border-bottom: 1px solid var(--sage-pale);">
+      <div class="container">
+        <h2 class="section-title">Curated Offerings</h2>
+        <p class="section-subtitle">Discover transformative journeys designed to help you reconnect and realign.</p>
+        <div class="offerings-grid" id="offeringsGrid">
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="contact">
-    <div class="container contact-layout">
-      <div class="contact-info">
-        <h2 class="section-title">Connect With Us</h2>
-        <p style="font-size: 1.1rem; color: #5a6b6b; margin-left: 1.8rem; margin-top: 1rem;">
-          Have questions about your spiritual journey or which offering to choose? Reach out to our guides, and we will help direct your path.
-        </p>
-      </div>
-      <div class="contact-form" id="contactForm">
-        <div class="form-group">
-          <input type="text" id="contactName" placeholder="Your name" required>
-        </div>
-        <div class="form-group">
-          <input type="email" id="contactEmail" placeholder="Email address" required>
-        </div>
-        <div class="form-group">
-          <textarea id="contactMsg" rows="5" placeholder="How can we support your journey?"></textarea>
-        </div>
-        <button class="btn btn-block btn-yellow" id="contactSubmit">Send your energy <i class="fas fa-paper-plane"></i></button>
-        <p id="contactFeedback" style="margin-top:1rem; color: var(--purple); font-weight: 500;"></p>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer class="site-footer">
-  <p>© 2025 InnerLight Awareness — A bespoke path to spiritual awakening</p>
-</footer>
-
-<button class="floating-consult" id="consultPopupBtn"><i class="fas fa-om"></i> Book Guidance</button>
-
-<div class="modal-overlay" id="cartModalOverlay">
-  <div class="modal">
-    <span class="close-btn" id="closeCartModal">&times;</span>
-    <h2 style="font-size: 2rem; margin-bottom: 1rem; border-left: 4px solid var(--purple); padding-left: 1rem;">Your Offerings</h2>
-    <ul class="cart-items" id="cartItemsList"></ul>
-    <div class="cart-total" id="cartTotal">Total: $0</div>
-    <button class="btn btn-block btn-yellow" id="checkoutBtn">Proceed to checkout</button>
-    <p style="margin-top:1rem; font-size:0.85rem; color: var(--sage);">Test Card: 4242 4242 4242 4242</p>
-  </div>
-</div>
-
-<div class="modal-overlay" id="paymentModalOverlay">
-  <div class="modal">
-    <span class="close-btn" id="closePaymentModal">&times;</span>
-    <h2 style="font-size: 2rem; margin-bottom: 1rem; border-left: 4px solid var(--yellow); padding-left: 1rem;">Secure Checkout</h2>
-    <div id="card-element"></div>
-    <button class="btn btn-block btn-purple" id="payButton">Pay & Begin Journey</button>
-    <div id="paymentResult" style="margin-top:1.5rem; font-weight: 600;"></div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="consultModalOverlay">
-  <div class="modal">
-    <span class="close-btn" id="closeConsultModal">&times;</span>
-    <h2 style="font-size: 2rem; margin-bottom: 1rem; border-left: 4px solid var(--sage); padding-left: 1rem;">Spiritual Guidance</h2>
-    <p style="margin-bottom: 2rem; color: #5a6b6b;">Book a one-on-one session with our intuitive guides to find the best offering for your current season of life.</p>
-    <form id="consultForm">
-      <div class="form-group"><input type="text" id="consultName" placeholder="Full name" required></div>
-      <div class="form-group"><input type="email" id="consultEmail" placeholder="Email" required></div>
-      <div class="form-group"><input type="datetime-local" id="consultDate" required></div>
-      <button type="submit" class="btn btn-block btn-yellow">Confirm Session</button>
-    </form>
-    <p id="consultFeedback" style="margin-top:1rem; font-weight: 600; color: var(--purple);"></p>
-  </div>
-</div>
-
-<script>
-  (function() {
-    // ----- OFFERING DATA -----
-    const offerings = [
-      { 
-        id: 1, 
-        name: 'Meditation Foundations', 
-        desc: 'Learn the core techniques of mindfulness to ground your energy daily.', 
-        price: 149,
-        img: 'images/meditation.jpg'
-      },
-      { 
-        id: 2, 
-        name: 'Chakra Balancing', 
-        desc: 'A deep dive into your energy centers to clear blockages and restore flow.', 
-        price: 249,
-        img: 'images/cozy.jpeg'
-      },
-      { 
-        id: 3, 
-        name: 'Intuitive Healing', 
-        desc: 'Awaken your inner healer and learn to trust your highest guidance.', 
-        price: 199,
-        img: 'images/crystals.jpeg'
-      },
-      { 
-        id: 4, 
-        name: 'Mindful Manifestation', 
-        desc: 'Align your vibrations with your deepest desires to co-create reality.', 
-        price: 129,
-        img: 'images/awareness.jpeg'
-      }
-    ];
-
-    let cart = [];
-    const stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx'); 
-    let cardElement = null;
-    let elements = null;
-
-    // ----- helper functions -----
-    function formatDate(dateStr) {
-      if (!dateStr) return 'not set';
-      const d = new Date(dateStr);
-      return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-    }
-
-    function updateCartCount() {
-      const count = cart.reduce((acc, item) => acc + 1, 0);
-      document.getElementById('cartCount').innerText = count;
-    }
-
-    function renderCartItems() {
-      const list = document.getElementById('cartItemsList');
-      const totalSpan = document.getElementById('cartTotal');
-      if (!list) return;
-      if (cart.length === 0) {
-        list.innerHTML = '<p style="text-align:center; color:var(--sage); font-style:italic;">Your cart is empty.</p>';
-        totalSpan.innerText = 'Total: $0';
-        return;
-      }
-      let html = '';
-      let total = 0;
-      cart.forEach(item => {
-        total += item.price;
-        html += `<li class="cart-item">
-          <div class="cart-item-info">
-            <strong>${item.name}</strong><br>
-            <small>📅 ${formatDate(item.selectedDate)}</small>
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title">A Space for Growth</h2>
+        <div class="about-layout">
+          <div class="about-img-box">
+            <img src="images/AdobeStock_907031279.jpeg" alt="Person meditating by the ocean">
           </div>
-          <span class="cart-item-price">$${item.price}</span>
-          <button class="remove-item" data-id="${item.id}"><i class="fas fa-times"></i></button>
-        </li>`;
-      });
-      list.innerHTML = html;
-      totalSpan.innerText = `Total: $${total}`;
+          <div class="about-text-box">
+            <p>Welcome to Innerlight Awareness. We believe that true growth happens when you are held in a supportive,
+              loving environment. Our offerings are carefully curated to provide practical guidance on your spiritual
+              awakening journey.</p>
+            <p>With lifetime access, live community support, and dedicated mentors, you are never walking this path
+              alone. The light within us honors the light within you.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-      document.querySelectorAll('.remove-item').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const id = Number(btn.dataset.id);
-          cart = cart.filter(item => item.id !== id);
-          updateCartCount();
-          renderCartItems();
+    <section id="testimonials" style="background: var(--sage-pale);">
+      <div class="container">
+        <h2 class="section-title">Voices of Awakening</h2>
+        <p class="section-subtitle">Real experiences from souls walking the path alongside you.</p>
+
+        <div class="testimonials-grid">
+          <div class="testimonial">
+            <i class="fas fa-quote-left"></i>
+            <p>"The Meditation Foundations offering changed my daily life. I finally feel grounded, and the environment
+              here brings me peace every time I return."</p>
+            <h4>Elena R.</h4>
+          </div>
+          <div class="testimonial">
+            <i class="fas fa-quote-left"></i>
+            <p>"The Chakra Balancing workshop was intense but incredibly healing. I feel a renewed sense of energy and
+              purpose. Thank you, SoulHarbor."</p>
+            <h4>Marcus T.</h4>
+          </div>
+          <div class="testimonial">
+            <i class="fas fa-quote-left"></i>
+            <p>"I took the Intuitive Healing masterclass and it felt like coming home. The mentors truly care, and the
+              space feels so intentionally designed."</p>
+            <h4>Sarah J.</h4>
+          </div>
+          <div class="testimonial">
+            <i class="fas fa-quote-left"></i>
+            <p>"I took the Intuitive Healing masterclass and it felt like coming home. The mentors truly care, and the
+              space feels so intentionally designed."</p>
+            <h4>Sarah J.</h4>
+          </div>
+          <div class="testimonial">
+            <i class="fas fa-quote-left"></i>
+            <p>"I took the Intuitive Healing masterclass and it felt like coming home. The mentors truly care, and the
+              space feels so intentionally designed."</p>
+            <h4>Sarah J.</h4>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container contact-layout">
+        <div class="contact-info">
+          <h2 class="section-title">Connect With Us</h2>
+          <p style="font-size: 1.1rem; color: #5a6b6b; margin-left: 1.8rem; margin-top: 1rem;">
+            Have questions about your spiritual journey or which offering to choose? Reach out to our guides, and we
+            will help direct your path.
+          </p>
+        </div>
+        <div class="contact-form" id="contactForm">
+          <div class="form-group">
+            <input type="text" id="contactName" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <input type="email" id="contactEmail" placeholder="Email address" required>
+          </div>
+          <div class="form-group">
+            <textarea id="contactMsg" rows="5" placeholder="How can we support your journey?"></textarea>
+          </div>
+          <button class="btn btn-block btn-yellow" id="contactSubmit">Send your energy <i
+              class="fas fa-paper-plane"></i></button>
+          <p id="contactFeedback" style="margin-top:1rem; color: var(--purple); font-weight: 500;"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2025 InnerLight Awareness — A bespoke path to spiritual awakening</p>
+    <p> Disclaimer: The information provided on this website is for educational purposes only and is not intended as a
+      substitute for professional medical advice, diagnosis, or treatment.</p>
+  </footer>
+
+  <button class="floating-consult" id="consultPopupBtn"><i class="fas fa-om"></i> Book Guidance</button>
+
+  <div class="modal-overlay" id="cartModalOverlay">
+    <div class="modal">
+      <span class="close-btn" id="closeCartModal">&times;</span>
+      <h2 style="font-size: 2rem; margin-bottom: 1rem; border-left: 4px solid var(--purple); padding-left: 1rem;">Your
+        Offerings</h2>
+      <ul class="cart-items" id="cartItemsList"></ul>
+      <div class="cart-total" id="cartTotal">Total: $0</div>
+      <button class="btn btn-block btn-yellow" id="checkoutBtn">Proceed to checkout</button>
+      <!-- <p style="margin-top:1rem; font-size:0.85rem; color: var(--sage);">Test Card: 4242 4242 4242 4242</p> -->
+    </div>
+  </div>
+
+  <!-- REMOVED paymentModalOverlay – no longer needed -->
+
+  <div class="modal-overlay" id="consultModalOverlay">
+    <div class="modal">
+      <span class="close-btn" id="closeConsultModal">&times;</span>
+      <h2 style="font-size: 2rem; margin-bottom: 1rem; border-left: 4px solid var(--sage); padding-left: 1rem;">
+        Spiritual Guidance</h2>
+      <p style="margin-bottom: 2rem; color: #5a6b6b;">Book a one-on-one session with our intuitive guides to find the
+        best offering for your current season of life.</p>
+      <form id="consultForm">
+        <div class="form-group"><input type="text" id="consultName" placeholder="Full name" required></div>
+        <div class="form-group"><input type="email" id="consultEmail" placeholder="Email" required></div>
+        <div class="form-group"><input type="datetime-local" id="consultDate" required></div>
+        <button type="submit" class="btn btn-block btn-yellow">Confirm Session</button>
+      </form>
+      <p id="consultFeedback" style="margin-top:1rem; font-weight: 600; color: var(--purple);"></p>
+    </div>
+  </div>
+
+  <!-- Enrollment Details Modal -->
+  <div class="modal-overlay" id="enrollModalOverlay">
+    <div class="modal">
+      <span class="close-btn" id="closeEnrollModal">&times;</span>
+      <h2 style="font-size: 2rem; margin-bottom: 1rem; border-left: 4px solid var(--sage); padding-left: 1rem;">Your
+        Enrollment</h2>
+      <p style="margin-bottom: 2rem; color: #5a6b6b;">Please provide your details to complete registration.</p>
+      <form id="enrollForm">
+        <div class="form-group">
+          <label style="font-weight:600;">Full Name</label>
+          <input type="text" id="enrollName" placeholder="Your full name" required>
+        </div>
+        <div class="form-group">
+          <label style="font-weight:600;">Email Address</label>
+          <input type="email" id="enrollEmail" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+          <label style="font-weight:600;">Date of Birth</label>
+          <input type="date" id="enrollDOB" required>
+        </div>
+        <div class="form-group">
+          <label style="font-weight:600;">Place of Birth</label>
+          <input type="text" id="enrollPOB" placeholder="City, Country" required>
+        </div>
+        <button type="submit" class="btn btn-block btn-yellow">Continue to Payment</button>
+      </form>
+      <p id="enrollFeedback" style="margin-top:1rem; font-weight: 600; color: var(--purple);"></p>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const CONFIG = {
+        emailjs: {
+          publicKey: 'igptDzqnOJZWr7Fii',      // Your EmailJS public key
+          serviceId: 'service_saqxc1e',        // Your EmailJS service ID
+          contactTemplateId: 'template_hypt78z',   // template for contact/consultation (also used for owner notification)
+          purchaseTemplateId: 'template_n5cfbks'   // template for purchase confirmation (to participant)
+        },
+        stripe: {
+          publishableKey: 'pk_live_51T2MwE3Cffh4uMO5WJ30tqIuKTZYzfX9p9jSm02KJr7Z7iBNDcWSbLTizGgRJuTDmd90qNXS4GpFX3Ih5gEQkNRv00LLLEKR7V'  // Your Stripe publishable key
+        },
+        recipientEmail: 'innerlightbackend@gmail.com'   // Where owner notifications go
+      };
+
+      // Initialize EmailJS
+      emailjs.init(CONFIG.emailjs.publicKey);
+      const stripe = Stripe(CONFIG.stripe.publishableKey);
+
+      // ----- Helper: Send email via EmailJS (missing in your original code) -----
+      async function sendEmail(templateId, templateParams) {
+        try {
+          const response = await emailjs.send(CONFIG.emailjs.serviceId, templateId, templateParams);
+          console.log('Email sent:', response.status);
+          return true;
+        } catch (error) {
+          console.error('Email error:', error);
+          return false;
+        }
+      }
+
+      // ----- OFFERING DATA (now includes Stripe Price IDs) -----
+      const offerings = [
+        {
+          id: 1,
+          name: 'Yearly Themes and Predictions',
+          desc: 'A focused session on your upcoming year. This reading looks at themes, timing, and the purpose of different phases you may experience. It helps you understand periods of growth, challenge, and transition, along with emotional and external shifts. You gain clarity on what each phase may be asking from you and how to approach the year with awareness rather than reaction. Duration: 60 minutes. Accurate time of birth is required',
+          price: 69,
+          img: 'images/meditation.jpg',
+          stripePriceId: 'prod_UOfiQCTVPvTfC9'
+        },
+        {
+          id: 2,
+          name: 'Current Life Situation Reading',
+          desc: 'A focused session on what you are currently going through. You can choose two areas such as relationships, career, finances, or emotional state. This session looks at your current planetary influences and the deeper pattern behind the situation. It helps you understand what is happening, why it feels stuck or confusing, and what may need to shift. Duration: 60 minutes. Accurate time of birth is required.',
+          price: 69,
+          img: 'images/cozy.jpeg',
+          stripePriceId: 'prod_UOfcHnAfLFZ9rl'
+        },
+        {
+          id: 3,
+          name: 'Life Path and Karmic Pattern Reading',
+          desc: 'A deep reading focused on understanding the larger patterns shaping your life. This session explores karma, timing, and life themes to help you see what may be repeating and why. Includes core life patterns, strengths and challenges, relationship and emotional tendencies, and long term direction. Duration: 90 minutes',
+          price: 111,
+          img: 'images/crystals.jpeg',
+          stripePriceId: 'prod_UOfUUC3hoTHnXk'
+        }/*,
+        {
+          id: 4,
+          name: 'Mindful Manifestation',
+          desc: 'Align your vibrations with your deepest desires to co-create reality.',
+          price: 129,
+          img: 'images/awareness.jpeg',
+          stripePriceId: 'prod_US0omWw3zFSWme'
+        }*/
+      ];
+
+      let cart = [];
+
+      // ----- helper functions -----
+      function formatDate(dateStr) {
+        if (!dateStr) return 'not set';
+        const d = new Date(dateStr);
+        return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+      }
+
+      function updateCartCount() {
+        const count = cart.length;
+        document.getElementById('cartCount').innerText = count;
+      }
+
+      function renderCartItems() {
+        const list = document.getElementById('cartItemsList');
+        const totalSpan = document.getElementById('cartTotal');
+        if (!list) return;
+        if (cart.length === 0) {
+          list.innerHTML = '<p style="text-align:center; color:var(--sage); font-style:italic;">Your cart is empty.</p>';
+          totalSpan.innerText = 'Total: $0';
+          return;
+        }
+        let html = '';
+        let total = 0;
+        cart.forEach(item => {
+          total += item.price;
+          html += `<li class="cart-item">
+            <div class="cart-item-info">
+              <strong>${item.name}</strong><br>
+              <small>📅 ${formatDate(item.selectedDate)}</small>
+            </div>
+            <span class="cart-item-price">$${item.price}</span>
+            <button class="remove-item" data-id="${item.id}"><i class="fas fa-times"></i></button>
+          </li>`;
         });
-      });
-    }
+        list.innerHTML = html;
+        totalSpan.innerText = `Total: $${total}`;
 
-    // generate offering cards dynamically
-    function renderOfferings() {
-      const grid = document.getElementById('offeringsGrid');
-      let html = '';
-      offerings.forEach(offering => {
-        html += `
+        document.querySelectorAll('.remove-item').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const id = Number(btn.dataset.id);
+            cart = cart.filter(item => item.id !== id);
+            updateCartCount();
+            renderCartItems();
+          });
+        });
+      }
+
+      // generate offering cards dynamically
+      function renderOfferings() {
+        const grid = document.getElementById('offeringsGrid');
+        let html = '';
+        offerings.forEach(offering => {
+          html += `
           <div class="offering-card" data-id="${offering.id}">
             <div class="img-arch-wrapper">
                <img src="${offering.img}" alt="${offering.name}" class="offering-img">
@@ -876,176 +985,309 @@
                 </div>
                 <button class="btn btn-purple btn-block add-to-cart" data-id="${offering.id}">Add to cart <i class="fas fa-plus"></i></button>
               </div>
-
             </div>
           </div>
         `;
-      });
-      grid.innerHTML = html;
-
-      // Add event listeners for the "Learn more" buttons
-      document.querySelectorAll('.learn-more-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const id = btn.dataset.id;
-          const detailsDiv = document.getElementById(`details-${id}`);
-          
-          if (detailsDiv.style.display === 'block') {
-            detailsDiv.style.display = 'none';
-            btn.innerHTML = `Learn more <i class="fas fa-chevron-down"></i>`;
-          } else {
-            detailsDiv.style.display = 'block';
-            btn.innerHTML = `Show less <i class="fas fa-chevron-up"></i>`;
-          }
         });
-      });
+        grid.innerHTML = html;
 
-      // Add event listeners for "Add to cart"
-      document.querySelectorAll('.add-to-cart').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const offeringId = Number(btn.dataset.id);
-          const offering = offerings.find(o => o.id === offeringId);
-          const cardDiv = btn.closest('.offering-card');
-          const dateInput = cardDiv.querySelector('.offering-date');
-          const selectedDate = dateInput ? dateInput.value : new Date().toISOString().split('T')[0];
-
-          if (!selectedDate) {
-            alert('Please select a start date.');
-            return;
-          }
-
-          cart.push({
-            id: Date.now() + Math.random(),
-            courseId: offering.id,
-            name: offering.name,
-            price: offering.price,
-            selectedDate: selectedDate
+        document.querySelectorAll('.learn-more-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const id = btn.dataset.id;
+            const detailsDiv = document.getElementById(`details-${id}`);
+            if (detailsDiv.style.display === 'block') {
+              detailsDiv.style.display = 'none';
+              btn.innerHTML = `Learn more <i class="fas fa-chevron-down"></i>`;
+            } else {
+              detailsDiv.style.display = 'block';
+              btn.innerHTML = `Show less <i class="fas fa-chevron-up"></i>`;
+            }
           });
-          updateCartCount();
-          renderCartItems(); 
         });
+
+        document.querySelectorAll('.add-to-cart').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const offeringId = Number(btn.dataset.id);
+            const offering = offerings.find(o => o.id === offeringId);
+            const cardDiv = btn.closest('.offering-card');
+            const dateInput = cardDiv.querySelector('.offering-date');
+            const selectedDate = dateInput ? dateInput.value : new Date().toISOString().split('T')[0];
+
+            if (!selectedDate) {
+              alert('Please select a start date.');
+              return;
+            }
+
+            cart.push({
+              id: Date.now() + Math.random(),
+              courseId: offering.id,
+              name: offering.name,
+              price: offering.price,
+              selectedDate: selectedDate,
+              stripePriceId: offering.stripePriceId  // <-- important: used for Stripe checkout
+            });
+            updateCartCount();
+            renderCartItems();
+          });
+        });
+      }
+
+      // ------ CONTACT FORM (with EmailJS) ------
+      document.getElementById('contactSubmit').addEventListener('click', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('contactName').value.trim();
+        const email = document.getElementById('contactEmail').value.trim();
+        const msg = document.getElementById('contactMsg').value.trim();
+        const feedback = document.getElementById('contactFeedback');
+
+        if (!name || !email || !msg) {
+          feedback.innerText = '⚠️ Please fill out all fields.';
+          return;
+        }
+
+        feedback.innerText = 'Sending…';
+        const success = await sendEmail(CONFIG.emailjs.contactTemplateId, {
+          to_email: CONFIG.recipientEmail,
+          from_name: name,
+          from_email: email,
+          subject: `New message from ${name}`,
+          message: msg,
+          reply_to: email
+        });
+
+        if (success) {
+          feedback.innerHTML = '✨ Thank you! Your energy has been received.';
+          document.getElementById('contactName').value = '';
+          document.getElementById('contactEmail').value = '';
+          document.getElementById('contactMsg').value = '';
+        } else {
+          feedback.innerHTML = '❌ Failed to send. Please try again.';
+        }
       });
-    }
 
-    // ------ CONTACT FORM -----
-    document.getElementById('contactSubmit').addEventListener('click', (e) => {
-      e.preventDefault();
-      const name = document.getElementById('contactName').value.trim();
-      const email = document.getElementById('contactEmail').value.trim();
-      const msg = document.getElementById('contactMsg').value.trim();
-      if (!name || !email || !msg) {
-        document.getElementById('contactFeedback').innerText = '⚠️ Please fill out all fields.';
-        return;
-      }
-      document.getElementById('contactFeedback').innerHTML = '✨ Thank you! Your energy has been received.';
-      document.getElementById('contactName').value = '';
-      document.getElementById('contactEmail').value = '';
-      document.getElementById('contactMsg').value = '';
-    });
+      // ------ CART MODAL -----
+      const cartIcon = document.getElementById('cartIcon');
+      const cartModal = document.getElementById('cartModalOverlay');
+      const closeCart = document.getElementById('closeCartModal');
 
-    // ------ CART MODAL -----
-    const cartIcon = document.getElementById('cartIcon');
-    const cartModal = document.getElementById('cartModalOverlay');
-    const closeCart = document.getElementById('closeCartModal');
+      cartIcon.addEventListener('click', () => {
+        renderCartItems();
+        cartModal.classList.add('active');
+      });
+      closeCart.addEventListener('click', () => cartModal.classList.remove('active'));
+      cartModal.addEventListener('click', (e) => {
+        if (e.target === cartModal) cartModal.classList.remove('active');
+      });
 
-    cartIcon.addEventListener('click', () => {
-      renderCartItems();
-      cartModal.classList.add('active');
-    });
-    closeCart.addEventListener('click', () => cartModal.classList.remove('active'));
-    cartModal.addEventListener('click', (e) => {
-      if (e.target === cartModal) cartModal.classList.remove('active');
-    });
+      // ----- STRIPE CHECKOUT (client‑only) with enrollment form -----
+      document.getElementById('checkoutBtn').addEventListener('click', () => {
+        if (cart.length === 0) {
+          alert('Your cart is empty.');
+          return;
+        }
+        // Show enrollment modal instead of old prompts
+        document.getElementById('enrollModalOverlay').classList.add('active');
+      });
 
-    // checkout button -> open payment modal
-    document.getElementById('checkoutBtn').addEventListener('click', () => {
-      if (cart.length === 0) {
-        alert('Your cart is empty.');
-        return;
-      }
-      cartModal.classList.remove('active');
-      const paymentModal = document.getElementById('paymentModalOverlay');
-      paymentModal.classList.add('active');
+      // Enrollment modal close handlers
+      document.getElementById('closeEnrollModal').addEventListener('click', () => {
+        document.getElementById('enrollModalOverlay').classList.remove('active');
+      });
+      document.getElementById('enrollModalOverlay').addEventListener('click', (e) => {
+        if (e.target === document.getElementById('enrollModalOverlay')) {
+          document.getElementById('enrollModalOverlay').classList.remove('active');
+        }
+      });
 
-      if (!cardElement) {
-        elements = stripe.elements();
-        cardElement = elements.create('card', { style: { base: { fontSize: '16px', color: '#2c3e3f', fontFamily: 'Inter, sans-serif' } } });
-        cardElement.mount('#card-element');
-      }
-    });
+      // Handle enrollment form submission -> redirect to Stripe Checkout
+      document.getElementById('enrollForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const enrollFeedback = document.getElementById('enrollFeedback');
+        const name = document.getElementById('enrollName').value.trim();
+        const email = document.getElementById('enrollEmail').value.trim();
+        const dob = document.getElementById('enrollDOB').value;
+        const pob = document.getElementById('enrollPOB').value.trim();
 
-    // payment modal close
-    const paymentModal = document.getElementById('paymentModalOverlay');
-    document.getElementById('closePaymentModal').addEventListener('click', () => paymentModal.classList.remove('active'));
-    paymentModal.addEventListener('click', (e) => { if (e.target === paymentModal) paymentModal.classList.remove('active'); });
+        if (!name || !email || !dob || !pob) {
+          enrollFeedback.innerText = 'Please fill in all fields.';
+          return;
+        }
 
-    // PAY button
-    document.getElementById('payButton').addEventListener('click', async () => {
-      if (!cardElement) return;
-      const payBtn = document.getElementById('payButton');
-      payBtn.disabled = true;
-      payBtn.innerText = 'Manifesting...';
+        // Validate that the cart items have real Stripe Price IDs
+        const invalidItems = cart.filter(item => !item.stripePriceId || item.stripePriceId.startsWith('price_Replace'));
+        if (invalidItems.length > 0) {
+          enrollFeedback.innerText = 'Configuration error: missing valid Stripe Price ID(s). Please contact the site owner.';
+          console.error('Cart items with invalid stripePriceId:', invalidItems);
+          return;
+        }
 
-      const { token, error } = await stripe.createToken(cardElement);
+        // Store participant data for use after successful payment
+        const participantData = { name, email, dob, pob };
+        sessionStorage.setItem('pendingParticipant', JSON.stringify(participantData));
+        sessionStorage.setItem('pendingPurchase', JSON.stringify({
+          cart,
+          participant: participantData,
+          timestamp: Date.now()
+        }));
 
-      payBtn.disabled = false;
-      payBtn.innerText = 'Pay & Begin Journey';
+        // Build line items (only price and quantity allowed)
+        const lineItems = cart.map(item => ({
+          price: item.stripePriceId,
+          quantity: 1
+        }));
 
-      if (error) {
-        document.getElementById('paymentResult').innerHTML = `<span style="color:red;">❌ ${error.message}</span>`;
-      } else {
-        document.getElementById('paymentResult').innerHTML = `<span style="color:green;">✨ Payment successful! Your journey begins now.</span>`;
-        cart = [];
+        enrollFeedback.innerText = 'Redirecting to secure payment…';
+        console.log('Starting Stripe Checkout with:', lineItems);
+
+        const { error } = await stripe.redirectToCheckout({
+          lineItems,
+          mode: 'payment',
+          successUrl: `${window.location.origin}${window.location.pathname}?session_id={CHECKOUT_SESSION_ID}`,
+          cancelUrl: `${window.location.origin}${window.location.pathname}`,
+          customerEmail: email
+          // metadata is NOT allowed here – removed
+        });
+
+        if (error) {
+          console.error('Stripe redirect error:', error);
+          enrollFeedback.innerText = 'Payment error: ' + error.message;
+        }
+      });
+      // ----- HANDLE SUCCESSFUL RETURN FROM STRIPE -----
+      async function handleStripeReturn() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const sessionId = urlParams.get('session_id');
+        if (!sessionId) return;
+
+        const pendingJson = sessionStorage.getItem('pendingPurchase');
+        if (!pendingJson) return;
+        const pending = JSON.parse(pendingJson);
+        const { cart, participant } = pending;
+
+        // 1. Send enrollment notification to owner (you)
+        const ownerSubject = `New Course Enrollment: ${cart.map(i => i.name).join(', ')}`;
+        const ownerBody = `Participant Name: ${participant.name}
+Email: ${participant.email}
+Date of Birth: ${participant.dob}
+Place of Birth: ${participant.pob}
+
+Courses enrolled:
+${cart.map(item => `- ${item.name} (starting ${formatDate(item.selectedDate)})`).join('\n')}
+
+Total paid: $${cart.reduce((sum, i) => sum + i.price, 0)}
+Enrollment date: ${new Date().toLocaleDateString()}
+`;
+
+        await sendEmail(CONFIG.emailjs.contactTemplateId, {
+          to_email: CONFIG.recipientEmail,
+          from_name: 'Innerlight Enrollment',
+          from_email: participant.email,
+          subject: ownerSubject,
+          message: ownerBody,
+          reply_to: participant.email
+        });
+
+        // 2. Send confirmation to participant
+        for (const item of cart) {
+          const courseName = item.name;
+          const startDate = item.selectedDate;
+          const userBody = `Hello ${participant.name},
+
+Thank you for enrolling in ${courseName}!
+Start date: ${startDate}
+
+Your journey with Innerlight Awareness begins soon. We'll be in touch with further details.
+
+With light,
+Innerlight Awareness Team`;
+
+          await sendEmail(CONFIG.emailjs.purchaseTemplateId, {
+            to_email: participant.email,
+            from_name: 'Innerlight Awareness',
+            subject: `Your Course: ${courseName}`,
+            message: userBody,
+            reply_to: CONFIG.recipientEmail
+          });
+        }
+
+        // Clear cart and storage
+        cart.length = 0;
         updateCartCount();
         renderCartItems();
+        sessionStorage.removeItem('pendingPurchase');
+        sessionStorage.removeItem('pendingParticipant');
 
-        setTimeout(() => {
-          paymentModal.classList.remove('active');
-          document.getElementById('paymentResult').innerHTML = ''; 
-        }, 2500);
+        alert('✨ Payment successful! A confirmation email has been sent to ' + participant.email);
+        window.history.replaceState({}, document.title, window.location.pathname);
       }
-    });
 
-    // ------ CONSULTATION POPUP -----
-    const consultBtn = document.getElementById('consultPopupBtn');
-    const consultModal = document.getElementById('consultModalOverlay');
-    const closeConsult = document.getElementById('closeConsultModal');
-    consultBtn.addEventListener('click', () => consultModal.classList.add('active'));
-    closeConsult.addEventListener('click', () => consultModal.classList.remove('active'));
-    consultModal.addEventListener('click', (e) => { if (e.target === consultModal) consultModal.classList.remove('active'); });
+      // Run return handler on page load (if we have a session_id in URL)
+      handleStripeReturn();
 
-    document.getElementById('consultForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = document.getElementById('consultName').value.trim();
-      const email = document.getElementById('consultEmail').value.trim();
-      const date = document.getElementById('consultDate').value;
-      if (!name || !email || !date) {
-        document.getElementById('consultFeedback').innerText = 'Please fill all fields.';
-        return;
-      }
-      document.getElementById('consultFeedback').innerHTML = '✨ Guidance booked! Look out for an email from our team.';
-      document.getElementById('consultForm').reset();
-      
-      setTimeout(() => {
-        consultModal.classList.remove('active');
-        document.getElementById('consultFeedback').innerText = '';
-      }, 2500);
-    });
-
-    function setMinDates() {
-      const today = new Date().toISOString().split('T')[0];
-      document.querySelectorAll('.offering-date').forEach(input => {
-        input.setAttribute('min', today);
-        if (!input.value) input.value = today;
+      // ------ CONSULTATION POPUP (with EmailJS) ------
+      const consultBtn = document.getElementById('consultPopupBtn');
+      const consultModal = document.getElementById('consultModalOverlay');
+      const closeConsult = document.getElementById('closeConsultModal');
+      consultBtn.addEventListener('click', () => consultModal.classList.add('active'));
+      closeConsult.addEventListener('click', () => consultModal.classList.remove('active'));
+      consultModal.addEventListener('click', (e) => {
+        if (e.target === consultModal) consultModal.classList.remove('active');
       });
-    }
 
-    // initialise
-    renderOfferings();
-    setMinDates();
-    updateCartCount();
-    renderCartItems();
+      document.getElementById('consultForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('consultName').value.trim();
+        const email = document.getElementById('consultEmail').value.trim();
+        const date = document.getElementById('consultDate').value;
+        const feedback = document.getElementById('consultFeedback');
 
-  })();
-</script>
+        if (!name || !email || !date) {
+          feedback.innerText = 'Please fill all fields.';
+          return;
+        }
+
+        feedback.innerText = 'Sending…';
+        const formattedDate = new Date(date).toLocaleString('en-US', {
+          dateStyle: 'full', timeStyle: 'short'
+        });
+        const emailBody = `${name} would like to book a consultation on ${formattedDate}.`;
+
+        const success = await sendEmail(CONFIG.emailjs.contactTemplateId, {
+          to_email: CONFIG.recipientEmail,
+          from_name: name,
+          from_email: email,
+          subject: `Consultation request from ${name}`,
+          message: emailBody,
+          reply_to: email
+        });
+
+        if (success) {
+          feedback.innerHTML = '✨ Guidance booked! Look out for an email from our team.';
+          document.getElementById('consultForm').reset();
+          setTimeout(() => {
+            consultModal.classList.remove('active');
+            feedback.innerText = '';
+          }, 2500);
+        } else {
+          feedback.innerText = '❌ Failed to send. Please try again.';
+        }
+      });
+
+      function setMinDates() {
+        const today = new Date().toISOString().split('T')[0];
+        document.querySelectorAll('.offering-date').forEach(input => {
+          input.setAttribute('min', today);
+          if (!input.value) input.value = today;
+        });
+      }
+
+      // initialise
+      renderOfferings();
+      setMinDates();
+      updateCartCount();
+      renderCartItems();
+    })();
+  </script>
 </body>
+
 </html>
