@@ -1115,58 +1115,52 @@
       // Handle enrollment form submission -> redirect to Stripe Checkout
       document.getElementById('enrollForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-        const enrollFeedback = document.getElementById('enrollFeedback');
+        const feedback = document.getElementById('enrollFeedback');
+
         const name = document.getElementById('enrollName').value.trim();
         const email = document.getElementById('enrollEmail').value.trim();
         const dob = document.getElementById('enrollDOB').value;
         const pob = document.getElementById('enrollPOB').value.trim();
 
         if (!name || !email || !dob || !pob) {
-          enrollFeedback.innerText = 'Please fill in all fields.';
+          feedback.innerText = 'Please fill in all fields.';
           return;
         }
 
-        // Validate that the cart items have real Stripe Price IDs
-        const invalidItems = cart.filter(item => !item.stripePriceId || item.stripePriceId.startsWith('price_Replace'));
-        if (invalidItems.length > 0) {
-          enrollFeedback.innerText = 'Configuration error: missing valid Stripe Price ID(s). Please contact the site owner.';
-          console.error('Cart items with invalid stripePriceId:', invalidItems);
-          return;
-        }
-
-        // Store participant data for use after successful payment
-        const participantData = { name, email, dob, pob };
-        sessionStorage.setItem('pendingParticipant', JSON.stringify(participantData));
-        sessionStorage.setItem('pendingPurchase', JSON.stringify({
-          cart,
-          participant: participantData,
-          timestamp: Date.now()
-        }));
-
-        // Build line items (only price and quantity allowed)
+        // Prepare cart data
         const lineItems = cart.map(item => ({
           price: item.stripePriceId,
           quantity: 1
         }));
 
-        enrollFeedback.innerText = 'Redirecting to secure payment…';
-        console.log('Starting Stripe Checkout with:', lineItems);
+        const courses = cart.map(item => ({
+          name: item.name,
+          startDate: formatDate(item.selectedDate)
+        }));
 
-        const { error } = await stripe.redirectToCheckout({
-          lineItems,
-          mode: 'payment',
-          successUrl: `${window.location.origin}${window.location.pathname}?session_id={CHECKOUT_SESSION_ID}`,
-          cancelUrl: `${window.location.origin}${window.location.pathname}`,
-          customerEmail: email
-          // metadata is NOT allowed here – removed
-        });
+        const participant = { name, email, dob, pob, courses };
 
-        if (error) {
-          console.error('Stripe redirect error:', error);
-          enrollFeedback.innerText = 'Payment error: ' + error.message;
+        feedback.innerText = 'Redirecting to secure payment…';
+
+        try {
+          const response = await fetch('/api/create-checkout-session', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ lineItems, participant })
+          });
+
+          const data = await response.json();
+          if (data.url) {
+            window.location.href = data.url;   // Stripe Checkout page
+          } else {
+            feedback.innerText = 'Error: ' + (data.error || 'Could not create session');
+          }
+        } catch (err) {
+          feedback.innerText = 'Network error. Please try again.';
+          console.error(err);
         }
       });
-      // ----- HANDLE SUCCESSFUL RETURN FROM STRIPE -----
+      /*// ----- HANDLE SUCCESSFUL RETURN FROM STRIPE -----
       async function handleStripeReturn() {
         const urlParams = new URLSearchParams(window.location.search);
         const sessionId = urlParams.get('session_id');
@@ -1235,7 +1229,7 @@ Innerlight Awareness Team`;
       }
 
       // Run return handler on page load (if we have a session_id in URL)
-      handleStripeReturn();
+      handleStripeReturn(); */
 
       // ------ CONSULTATION POPUP (with EmailJS) ------
       const consultBtn = document.getElementById('consultPopupBtn');
