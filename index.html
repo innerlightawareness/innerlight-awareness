@@ -784,6 +784,7 @@
 
   <button class="floating-consult" id="consultPopupBtn"><i class="fas fa-om"></i> Book Guidance</button>
 
+  <!-- Simplified Cart Modal - displays cart items as direct payment links -->
   <div class="modal-overlay" id="cartModalOverlay">
     <div class="modal">
       <span class="close-btn" id="closeCartModal">&times;</span>
@@ -791,12 +792,10 @@
         Offerings</h2>
       <ul class="cart-items" id="cartItemsList"></ul>
       <div class="cart-total" id="cartTotal">Total: $0</div>
-      <button class="btn btn-block btn-yellow" id="checkoutBtn">Proceed to checkout</button>
-      <!-- <p style="margin-top:1rem; font-size:0.85rem; color: var(--sage);">Test Card: 4242 4242 4242 4242</p> -->
+      <!-- Removed checkout button - each item now has its own payment link -->
+      <p style="margin-top:1rem; font-size:0.85rem; color: var(--sage);">Click on any offering above to proceed with payment.</p>
     </div>
   </div>
-
-  <!-- REMOVED paymentModalOverlay – no longer needed -->
 
   <div class="modal-overlay" id="consultModalOverlay">
     <div class="modal">
@@ -815,69 +814,30 @@
     </div>
   </div>
 
-  <!-- Enrollment Details Modal -->
-  <div class="modal-overlay" id="enrollModalOverlay">
-    <div class="modal">
-      <span class="close-btn" id="closeEnrollModal">&times;</span>
-      <h2 style="font-size: 2rem; margin-bottom: 1rem; border-left: 4px solid var(--sage); padding-left: 1rem;">Your
-        Enrollment</h2>
-      <p style="margin-bottom: 2rem; color: #5a6b6b;">Please provide your details to complete registration.</p>
-      <form id="enrollForm">
-        <div class="form-group">
-          <label style="font-weight:600;">Full Name</label>
-          <input type="text" id="enrollName" placeholder="Your full name" required>
-        </div>
-        <div class="form-group">
-          <label style="font-weight:600;">Email Address</label>
-          <input type="email" id="enrollEmail" placeholder="you@example.com" required>
-        </div>
-        <div class="form-group">
-          <label style="font-weight:600;">Date of Birth</label>
-          <input type="date" id="enrollDOB" required>
-        </div>
-        <div class="form-group">
-          <label style="font-weight:600;">Place of Birth</label>
-          <input type="text" id="enrollPOB" placeholder="City, Country" required>
-        </div>
-        <button type="submit" class="btn btn-block btn-yellow">Continue to Payment</button>
-      </form>
-      <p id="enrollFeedback" style="margin-top:1rem; font-weight: 600; color: var(--purple);"></p>
-    </div>
-  </div>
-
   <script>
     (function () {
       const CONFIG = {
         emailjs: {
-          publicKey: 'igptDzqnOJZWr7Fii',      // Your EmailJS public key
-          serviceId: 'service_saqxc1e',        // Your EmailJS service ID
-          contactTemplateId: 'template_hypt78z',   // template for contact/consultation (also used for owner notification)
-          purchaseTemplateId: 'template_n5cfbks'   // template for purchase confirmation (to participant)
+          publicKey: 'igptDzqnOJZWr7Fii',
+          serviceId: 'service_saqxc1e',
+          contactTemplateId: 'template_hypt78z',
+          purchaseTemplateId: 'template_n5cfbks'
         },
-        stripe: {
-          publishableKey: 'pk_live_51T2MwE3Cffh4uMO5WJ30tqIuKTZYzfX9p9jSm02KJr7Z7iBNDcWSbLTizGgRJuTDmd90qNXS4GpFX3Ih5gEQkNRv00LLLEKR7V'  // Your Stripe publishable key
+        // Direct Stripe Payment Links - replace these with your actual payment links
+        stripePaymentLinks: {
+          1: 'https://buy.stripe.com/9B6bIU0lBbvSabPczu5os00',
+          2: 'https://buy.stripe.com/6oU3co2tJ2Zmes5fLG5os01',
+          3: 'https://buy.stripe.com/5kQ8wI9WbczWdo17fa5os02'
         },
-        recipientEmail: 'innerlightbackend@gmail.com'   // Where owner notifications go
+        recipientEmail: 'innerlightbackend@gmail.com'
       };
-      document.getElementById('testStripeBtn').addEventListener('click', () => {
-        const TEST_PRICE_ID = 'price_1TPs9i3Cffh4uMO5PO5YvVaQ'; // Replace with a real test price ID from your Stripe dashboard
-        stripe.redirectToCheckout({
-          lineItems: [{ price: TEST_PRICE_ID, quantity: 1 }],
-          mode: 'payment',
-          successUrl: window.location.href,
-          cancelUrl: window.location.href
-        }).then(result => {
-          if (result.error) {
-            alert('Stripe error: ' + result.error.message);
-            console.error(result.error);
-          }
-        });
-      });
+
+      // Test button removed - no longer needed
+
       // Initialize EmailJS
       emailjs.init(CONFIG.emailjs.publicKey);
-      const stripe = Stripe(CONFIG.stripe.publishableKey);
 
-      // ----- Helper: Send email via EmailJS (missing in your original code) -----
+      // ----- Helper: Send email via EmailJS -----
       async function sendEmail(templateId, templateParams) {
         try {
           const response = await emailjs.send(CONFIG.emailjs.serviceId, templateId, templateParams);
@@ -889,7 +849,7 @@
         }
       }
 
-      // ----- OFFERING DATA (now includes Stripe Price IDs) -----
+      // ----- OFFERING DATA (with Stripe Payment Links) -----
       const offerings = [
         {
           id: 1,
@@ -897,7 +857,7 @@
           desc: 'A focused session on your upcoming year. This reading looks at themes, timing, and the purpose of different phases you may experience. It helps you understand periods of growth, challenge, and transition, along with emotional and external shifts. You gain clarity on what each phase may be asking from you and how to approach the year with awareness rather than reaction. Duration: 60 minutes. Accurate time of birth is required',
           price: 69,
           img: 'images/meditation.jpg',
-          stripePriceId: 'price_1TPsNK3Cffh4uMO5COpKIWnB'
+          paymentLink: CONFIG.stripePaymentLinks[1]
         },
         {
           id: 2,
@@ -905,7 +865,7 @@
           desc: 'A focused session on what you are currently going through. You can choose two areas such as relationships, career, finances, or emotional state. This session looks at your current planetary influences and the deeper pattern behind the situation. It helps you understand what is happening, why it feels stuck or confusing, and what may need to shift. Duration: 60 minutes. Accurate time of birth is required.',
           price: 69,
           img: 'images/cozy.jpeg',
-          stripePriceId: 'price_1TPsHR3Cffh4uMO5mPqtxWkI'
+          paymentLink: CONFIG.stripePaymentLinks[2]
         },
         {
           id: 3,
@@ -913,27 +873,13 @@
           desc: 'A deep reading focused on understanding the larger patterns shaping your life. This session explores karma, timing, and life themes to help you see what may be repeating and why. Includes core life patterns, strengths and challenges, relationship and emotional tendencies, and long term direction. Duration: 90 minutes',
           price: 111,
           img: 'images/crystals.jpeg',
-          stripePriceId: 'price_1TPs9i3Cffh4uMO5PO5YvVaQ'
-        }/*,
-        {
-          id: 4,
-          name: 'Mindful Manifestation',
-          desc: 'Align your vibrations with your deepest desires to co-create reality.',
-          price: 129,
-          img: 'images/awareness.jpeg',
-          stripePriceId: 'prod_US0omWw3zFSWme'
-        }*/
+          paymentLink: CONFIG.stripePaymentLinks[3]
+        }
       ];
 
       let cart = [];
 
       // ----- helper functions -----
-      function formatDate(dateStr) {
-        if (!dateStr) return 'not set';
-        const d = new Date(dateStr);
-        return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-      }
-
       function updateCartCount() {
         const count = cart.length;
         document.getElementById('cartCount').innerText = count;
@@ -954,10 +900,12 @@
           total += item.price;
           html += `<li class="cart-item">
             <div class="cart-item-info">
-              <strong>${item.name}</strong><br>
-              <small>📅 ${formatDate(item.selectedDate)}</small>
+              <strong>${item.name}</strong>
             </div>
             <span class="cart-item-price">$${item.price}</span>
+            <a href="${item.paymentLink}" class="btn btn-purple btn-sm" style="margin-left: 1rem; text-decoration: none;">
+              Pay Now <i class="fas fa-arrow-right"></i>
+            </a>
             <button class="remove-item" data-id="${item.id}"><i class="fas fa-times"></i></button>
           </li>`;
         });
@@ -992,11 +940,12 @@
               
               <div class="offering-details" id="details-${offering.id}">
                 <div class="offering-price">$${offering.price} <small>· one‑time</small></div>
-                <div class="date-picker">
-                  <label>Start Date</label>
-                  <input type="date" class="offering-date" data-id="${offering.id}" value="${new Date().toISOString().split('T')[0]}" min="${new Date().toISOString().split('T')[0]}">
-                </div>
-                <button class="btn btn-purple btn-block add-to-cart" data-id="${offering.id}">Add to cart <i class="fas fa-plus"></i></button>
+                <a href="${offering.paymentLink}" class="btn btn-purple btn-block" style="text-decoration: none; display: inline-block; text-align: center;">
+                  Add to cart <i class="fas fa-shopping-cart"></i>
+                </a>
+                <a href="${offering.paymentLink}" class="btn btn-yellow btn-block" style="text-decoration: none; display: inline-block; text-align: center; margin-top: 0.5rem;">
+                  Buy Now <i class="fas fa-bolt"></i>
+                </a>
               </div>
             </div>
           </div>
@@ -1018,26 +967,20 @@
           });
         });
 
-        document.querySelectorAll('.add-to-cart').forEach(btn => {
+        // Add to cart buttons (first button in offering details)
+        document.querySelectorAll('.offering-details .btn-purple').forEach(btn => {
           btn.addEventListener('click', (e) => {
-            const offeringId = Number(btn.dataset.id);
+            e.preventDefault();
+            const offeringCard = btn.closest('.offering-card');
+            const offeringId = Number(offeringCard.dataset.id);
             const offering = offerings.find(o => o.id === offeringId);
-            const cardDiv = btn.closest('.offering-card');
-            const dateInput = cardDiv.querySelector('.offering-date');
-            const selectedDate = dateInput ? dateInput.value : new Date().toISOString().split('T')[0];
-
-            if (!selectedDate) {
-              alert('Please select a start date.');
-              return;
-            }
-
+            
             cart.push({
               id: Date.now() + Math.random(),
               courseId: offering.id,
               name: offering.name,
               price: offering.price,
-              selectedDate: selectedDate,
-              stripePriceId: offering.stripePriceId  // <-- important: used for Stripe checkout
+              paymentLink: offering.paymentLink
             });
             updateCartCount();
             renderCartItems();
@@ -1092,145 +1035,6 @@
         if (e.target === cartModal) cartModal.classList.remove('active');
       });
 
-      // ----- STRIPE CHECKOUT (client‑only) with enrollment form -----
-      document.getElementById('checkoutBtn').addEventListener('click', () => {
-        if (cart.length === 0) {
-          alert('Your cart is empty.');
-          return;
-        }
-        // Show enrollment modal instead of old prompts
-        document.getElementById('enrollModalOverlay').classList.add('active');
-      });
-
-      // Enrollment modal close handlers
-      document.getElementById('closeEnrollModal').addEventListener('click', () => {
-        document.getElementById('enrollModalOverlay').classList.remove('active');
-      });
-      document.getElementById('enrollModalOverlay').addEventListener('click', (e) => {
-        if (e.target === document.getElementById('enrollModalOverlay')) {
-          document.getElementById('enrollModalOverlay').classList.remove('active');
-        }
-      });
-
-      // Handle enrollment form submission -> redirect to Stripe Checkout
-      document.getElementById('enrollForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const feedback = document.getElementById('enrollFeedback');
-
-        const name = document.getElementById('enrollName').value.trim();
-        const email = document.getElementById('enrollEmail').value.trim();
-        const dob = document.getElementById('enrollDOB').value;
-        const pob = document.getElementById('enrollPOB').value.trim();
-
-        if (!name || !email || !dob || !pob) {
-          feedback.innerText = 'Please fill in all fields.';
-          return;
-        }
-
-        // Prepare cart data
-        const lineItems = cart.map(item => ({
-          price: item.stripePriceId,
-          quantity: 1
-        }));
-
-        const courses = cart.map(item => ({
-          name: item.name,
-          startDate: formatDate(item.selectedDate)
-        }));
-
-        const participant = { name, email, dob, pob, courses };
-
-        feedback.innerText = 'Redirecting to secure payment…';
-
-        try {
-          const response = await fetch('/api/create-checkout-session', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ lineItems, participant })
-          });
-
-          const data = await response.json();
-          if (data.url) {
-            window.location.href = data.url;   // Stripe Checkout page
-          } else {
-            feedback.innerText = 'Error: ' + (data.error || 'Could not create session');
-          }
-        } catch (err) {
-          feedback.innerText = 'Network error. Please try again.';
-          console.error(err);
-        }
-      });
-      /*// ----- HANDLE SUCCESSFUL RETURN FROM STRIPE -----
-      async function handleStripeReturn() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const sessionId = urlParams.get('session_id');
-        if (!sessionId) return;
-
-        const pendingJson = sessionStorage.getItem('pendingPurchase');
-        if (!pendingJson) return;
-        const pending = JSON.parse(pendingJson);
-        const { cart, participant } = pending;
-
-        // 1. Send enrollment notification to owner (you)
-        const ownerSubject = `New Course Enrollment: ${cart.map(i => i.name).join(', ')}`;
-        const ownerBody = `Participant Name: ${participant.name}
-Email: ${participant.email}
-Date of Birth: ${participant.dob}
-Place of Birth: ${participant.pob}
-
-Courses enrolled:
-${cart.map(item => `- ${item.name} (starting ${formatDate(item.selectedDate)})`).join('\n')}
-
-Total paid: $${cart.reduce((sum, i) => sum + i.price, 0)}
-Enrollment date: ${new Date().toLocaleDateString()}
-`;
-
-        await sendEmail(CONFIG.emailjs.contactTemplateId, {
-          to_email: CONFIG.recipientEmail,
-          from_name: 'Innerlight Enrollment',
-          from_email: participant.email,
-          subject: ownerSubject,
-          message: ownerBody,
-          reply_to: participant.email
-        });
-
-        // 2. Send confirmation to participant
-        for (const item of cart) {
-          const courseName = item.name;
-          const startDate = item.selectedDate;
-          const userBody = `Hello ${participant.name},
-
-Thank you for enrolling in ${courseName}!
-Start date: ${startDate}
-
-Your journey with Innerlight Awareness begins soon. We'll be in touch with further details.
-
-With light,
-Innerlight Awareness Team`;
-
-          await sendEmail(CONFIG.emailjs.purchaseTemplateId, {
-            to_email: participant.email,
-            from_name: 'Innerlight Awareness',
-            subject: `Your Course: ${courseName}`,
-            message: userBody,
-            reply_to: CONFIG.recipientEmail
-          });
-        }
-
-        // Clear cart and storage
-        cart.length = 0;
-        updateCartCount();
-        renderCartItems();
-        sessionStorage.removeItem('pendingPurchase');
-        sessionStorage.removeItem('pendingParticipant');
-
-        alert('✨ Payment successful! A confirmation email has been sent to ' + participant.email);
-        window.history.replaceState({}, document.title, window.location.pathname);
-      }
-
-      // Run return handler on page load (if we have a session_id in URL)
-      handleStripeReturn(); */
-
       // ------ CONSULTATION POPUP (with EmailJS) ------
       const consultBtn = document.getElementById('consultPopupBtn');
       const consultModal = document.getElementById('consultModalOverlay');
@@ -1280,17 +1084,8 @@ Innerlight Awareness Team`;
         }
       });
 
-      function setMinDates() {
-        const today = new Date().toISOString().split('T')[0];
-        document.querySelectorAll('.offering-date').forEach(input => {
-          input.setAttribute('min', today);
-          if (!input.value) input.value = today;
-        });
-      }
-
       // initialise
       renderOfferings();
-      setMinDates();
       updateCartCount();
       renderCartItems();
     })();
