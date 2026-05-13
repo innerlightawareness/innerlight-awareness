@@ -213,8 +213,29 @@
       align-items: center;
     }
 
+    .hero-banner-section {
+      padding-top: 4rem;
+    }
+
+    .hero-banner-image-wrapper {
+      width: 100vw;
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      overflow: hidden;
+    }
+
+    .hero-banner-image {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
     .hero-text {
       padding-right: 2rem;
+      text-align: center;
     }
 
     .hero-text h1 {
@@ -610,6 +631,12 @@
       box-shadow: var(--shadow-hover);
     }
 
+    .floating-consult.hidden {
+      opacity: 0;
+      transform: translateY(1rem);
+      pointer-events: none;
+    }
+
     /* ----- RESPONSIVE ----- */
     @media (max-width: 900px) {
 
@@ -661,19 +688,22 @@
   </header>
 
   <main>
-    <section id="welcome" style="padding-top: 4rem;">
+    <section id="welcome" class="hero-banner-section">
+      <div class="hero-banner-image-wrapper">
+        <img src="images/Banner on Sage.png" alt="Person meditating by the ocean" class="hero-banner-image">
+      </div>
       <div class="container hero-wrapper">
         <div class="hero-text">
-          <h1>Awaken to Your <br><span>Highest Self</span></h1>
+          <!--<h1>Awaken to Your <br><span>Highest Self</span></h1>
           <p style="font-size: 1.15rem; color: #5a6b6b; margin-bottom: 2rem;">
             Whether you are taking your first steps into mindfulness or deepening a lifelong practice, you have arrived
             at the right place. Take a deep breath, release the outside world, and explore the paths we have prepared
             for your soul's growth.
-          </p>
-          <a href="#offerings" class="btn btn-purple">Explore Journeys <i class="fas fa-arrow-down"></i></a>
+          </p> -->
+          <a href="#offerings" class="btn btn-yellow" style="margin-top: 5%;">Explore Journeys <i class="fas fa-arrow-down"></i></a>
         </div>
         <div class="hero-accent-box">
-          <p style="font-size: 1.25rem; font-style: italic; color: var(--charcoal); line-height: 1.8;">
+          <p style="font-size: 1.25rem; font-style: italic; color: var(--charcoal); line-height: 1.8; align-content: center;">
             Your life is not random. It is patterned, timed, and trying to show you something.
           </p>
         </div>
@@ -716,33 +746,33 @@
         <div class="testimonials-grid">
           <div class="testimonial">
             <i class="fas fa-quote-left"></i>
-            <p>"The Meditation Foundations offering changed my daily life. I finally feel grounded, and the environment
-              here brings me peace every time I return."</p>
-            <h4>Elena R.</h4>
+            <h5>  Gave me clarity and real direction. </h5>
+            <p>"The insights were deep, thoughtful, and genuinely helpful. I was able to understand my situation much more clearly."</p>
+            <h4>K. Goyal, Brampton</h4>
           </div>
           <div class="testimonial">
             <i class="fas fa-quote-left"></i>
-            <p>"The Chakra Balancing workshop was intense but incredibly healing. I feel a renewed sense of energy and
-              purpose. Thank you, SoulHarbor."</p>
-            <h4>Marcus T.</h4>
+            <h5>  Accurate, practical, and easy to apply. </h5>
+            <p>"She looks beyond the chart and explains patterns in a way that actually makes sense. Her guidance is simple and effective."</p>
+            <h4>M. Agarwal, New Delhi</h4>
           </div>
           <div class="testimonial">
             <i class="fas fa-quote-left"></i>
-            <p>"I took the Intuitive Healing masterclass and it felt like coming home. The mentors truly care, and the
-              space feels so intentionally designed."</p>
-            <h4>Sarah J.</h4>
+            <h5>  Changed how I approached relationships. </h5>
+            <p>"Her guidance helped me shift my perspective and make better decisions. It made a real difference in my life."</p>
+            <h4> J. G. Mutreja, Los Angeles</h4>
           </div>
           <div class="testimonial">
             <i class="fas fa-quote-left"></i>
-            <p>"I took the Intuitive Healing masterclass and it felt like coming home. The mentors truly care, and the
-              space feels so intentionally designed."</p>
-            <h4>Sarah J.</h4>
+            <h5>  Insightful and grounded.” </h5>
+            <p>"Her understanding of patterns and timing is strong. Each session leaves you with clarity and a sense of direction."</p>
+            <h4>M. Duvvedi, Chandigarh</h4>
           </div>
           <div class="testimonial">
             <i class="fas fa-quote-left"></i>
-            <p>"I took the Intuitive Healing masterclass and it felt like coming home. The mentors truly care, and the
-              space feels so intentionally designed."</p>
-            <h4>Sarah J.</h4>
+            <h5>  Gets to the root quickly. </h5>
+            <p>"She identifies the core issue without much explanation and gives clear, practical guidance."</p>
+            <h4>S. C. Singhal, New Delhi</h4>
           </div>
         </div>
       </div>
@@ -767,7 +797,7 @@
           <div class="form-group">
             <textarea id="contactMsg" rows="5" placeholder="How can we support your journey?"></textarea>
           </div>
-          <button class="btn btn-block btn-yellow" id="contactSubmit">Send your energy <i
+          <button class="btn btn-block btn-yellow" id="contactSubmit">Send your message <i
               class="fas fa-paper-plane"></i></button>
           <p id="contactFeedback" style="margin-top:1rem; color: var(--purple); font-weight: 500;"></p>
         </div>
@@ -801,7 +831,7 @@
       <span class="close-btn" id="closeConsultModal">&times;</span>
       <h2 style="font-size: 2rem; margin-bottom: 1rem; border-left: 4px solid var(--sage); padding-left: 1rem;">
         Spiritual Guidance</h2>
-      <p style="margin-bottom: 2rem; color: #5a6b6b;">Book a one-on-one session with our intuitive guides to find the
+      <p style="margin-bottom: 2rem; color: #5a6b6b;">Book a one-on-one session with our intuitive guide to find the
         best offering for your current season of life.</p>
       <form id="consultForm">
         <div class="form-group"><input type="text" id="consultName" placeholder="Full name" required></div>
@@ -1081,6 +1111,17 @@
         } else {
           feedback.innerText = '❌ Failed to send. Please try again.';
         }
+      });
+
+      // Collapse floating consult button during scroll
+      const consultButton = document.getElementById('consultPopupBtn');
+      let scrollTimer;
+      window.addEventListener('scroll', () => {
+        consultButton.classList.add('hidden');
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(() => {
+          consultButton.classList.remove('hidden');
+        }, 300);
       });
 
       // initialise
