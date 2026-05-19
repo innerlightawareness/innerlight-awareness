@@ -667,6 +667,50 @@
         font-size: 2.5rem;
       }
     }
+
+    /* Scrollable modal content */
+    #aboutModalOverlay .modal {
+      max-width: 800px;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding-right: 1rem;
+    }
+
+    /* Custom scrollbar for the modal */
+    #aboutModalOverlay .modal::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    #aboutModalOverlay .modal::-webkit-scrollbar-track {
+      background: var(--sage-pale);
+      border-radius: 10px;
+    }
+
+    #aboutModalOverlay .modal::-webkit-scrollbar-thumb {
+      background: var(--purple);
+      border-radius: 10px;
+    }
+
+    #aboutModalOverlay .modal::-webkit-scrollbar-thumb:hover {
+      background: var(--purple-dark, #6b5ce7);
+    }
+
+    /* Smooth modal opening animation */
+    .modal-overlay.active .modal {
+      animation: modalSlideIn 0.4s ease-out forwards;
+    }
+
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
   </style>
 </head>
 
@@ -700,15 +744,192 @@
             at the right place. Take a deep breath, release the outside world, and explore the paths we have prepared
             for your soul's growth.
           </p> -->
-          <a href="#offerings" class="btn btn-yellow" style="margin-top: 5%;">Explore Journeys <i class="fas fa-arrow-down"></i></a>
+          <a href="#offerings" class="btn btn-yellow" style="margin-top: 5%;">Explore Journeys <i
+              class="fas fa-arrow-down"></i></a>
         </div>
-        <div class="hero-accent-box">
-          <p style="font-size: 1.25rem; font-style: italic; color: var(--charcoal); line-height: 1.8; align-content: center;">
+        <!-- <div class="hero-accent-box">
+          <p
+            style="font-size: 1.25rem; font-style: italic; color: var(--charcoal); line-height: 1.8; align-content: center;">
             Your life is not random. It is patterned, timed, and trying to show you something.
           </p>
+        </div> -->
+      </div>
+    </section>
+
+    <section id="about-me" style="background: var(--sage-pale);">
+      <div class="container">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-me-wrapper" style="max-width: 800px; margin: 0 auto;">
+
+          <!-- Profile Image (optional) 
+          <div style="text-align: center; margin-bottom: 2rem;">
+            <div class="about-me-img"
+              style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden; margin: 0 auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+              <img src="images/your-profile.jpg" alt="Your Name" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <h3 style="margin-top: 1rem; color: var(--charcoal); font-size: 1.5rem;">Your Name</h3>
+            <p style="color: var(--purple); font-weight: 500;">Spiritual Guide & Astrologer</p>
+          </div>
+          -->
+
+          <!-- Brief Explanation -->
+          <div class="about-me-brief"
+            style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+            <p style="font-size: 1.1rem; color: #5a6b6b; line-height: 1.8; margin: 0;">
+              My work is rooted in understanding patterns, timing, and lived experience, using astrology and intuitive
+              insight to bring clarity to the deeper themes shaping life. At some point, most of us begin to notice that
+              life does not unfold randomly. Certain experiences repeat, and some phases feel difficult to understand
+              even when we are trying to move forward.
+            </p>
+
+            <!-- Learn More Button -->
+            <button class="btn btn-outline btn-block" id="aboutMoreBtn" style="margin-top: 1.5rem;">
+              Learn more about my journey <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
         </div>
       </div>
     </section>
+
+    <!-- About Me Modal -->
+    <div class="modal-overlay" id="aboutModalOverlay">
+      <div class="modal" style="max-width: 800px; max-height: 80vh; overflow-y: auto;">
+        <span class="close-btn" id="closeAboutModal">&times;</span>
+
+        <h2
+          style="font-size: 2rem; margin-bottom: 1.5rem; border-left: 4px solid var(--purple); padding-left: 1rem; color: var(--charcoal);">
+          About Me
+        </h2>
+
+        <div style="font-size: 1.05rem; color: #5a6b6b; line-height: 1.9;">
+
+          <p style="margin-bottom: 1.5rem;">
+            My work is rooted in understanding patterns, timing, and lived experience, using astrology and intuitive
+            insight to bring clarity to the deeper themes shaping life.
+          </p>
+
+          <p style="margin-bottom: 1.5rem;">
+            At some point, most of us begin to notice that life does not unfold randomly. Certain experiences repeat,
+            and some phases feel difficult to understand even when we are trying to move forward.
+          </p>
+
+          <p style="margin-bottom: 1.5rem;">
+            This question has been central to my own life as well. Why do certain experiences repeat, even when we
+            are trying to move forward, and what are they asking us to understand?
+          </p>
+
+          <p style="margin-bottom: 1.5rem;">
+            My search for these answers led me deeper into astrology, not just as a subject, but as a way to understand
+            the underlying structure of life.
+          </p>
+
+          <p style="margin-bottom: 1.5rem;">
+            Alongside this, I became aware that I naturally perceive things beyond what is immediately visible. Over
+            time, this intuitive and almost psychic sensitivity became an integral part of how I understand patterns,
+            situations, and people.
+          </p>
+
+          <p style="margin-bottom: 1.5rem;">
+            At the same time, I come from a strong academic background in mathematics, statistics, and computer science,
+            and I have worked in corporate and government environments. This keeps my approach grounded. I do not rely
+            on blind belief. I need to understand what I am seeing.
+          </p>
+
+          <p style="margin-bottom: 1.5rem;">
+            But what has shaped my work the most is my own life.
+          </p>
+
+          <p style="margin-bottom: 1.5rem;">
+            I have gone through phases that brought emotional intensity, instability, health challenges, and situations
+            that did not make sense even when I was doing everything right. Those phases forced me to question
+            everything
+            I thought I knew about effort, control, and outcome.
+          </p>
+
+          <p style="margin-bottom: 1.5rem;">
+            That is where my understanding deepened.
+          </p>
+
+          <p style="margin-bottom: 1.5rem;">
+            I began to see that what we go through is not random. There are patterns. There is timing. There are karmic
+            imprints that continue to play out until something is seen and understood.
+          </p>
+
+          <p style="margin-bottom: 1.5rem;">
+            For me, astrology is not about predicting events or offering quick remedies.
+          </p>
+
+          <p style="margin-bottom: 1.5rem;">
+            It is about understanding the theme behind the situation.
+          </p>
+
+          <p style="margin-bottom: 1.5rem;">
+            When you understand the theme and the underlying karmic pattern, things begin to make sense. You start to
+            see what is repeating, what is actually driving the situation, and what needs to shift.
+          </p>
+
+          <p style="margin-bottom: 1.5rem;">
+            My work is not about fixing your life from the outside.
+          </p>
+
+          <p style="margin-bottom: 1.5rem;">
+            It is about helping you see what your life is trying to show you.
+          </p>
+
+          <p style="margin-bottom: 1.5rem;">
+            Because once you see it clearly, your response changes. Your choices change. And that is what begins to
+            shift the pattern.
+          </p>
+
+          <p style="margin-bottom: 1.5rem;">
+            And often, when something is seen with that level of clarity, healing does not have to be forced. It begins
+            on its own.
+          </p>
+
+          <p style="margin-bottom: 1.5rem;">
+            I do use astrology, numerology, and other systems, but I do not follow a fixed method. I use what is needed
+            to understand the situation fully, along with my intuitive reading.
+          </p>
+
+          <p style="margin-bottom: 1.5rem;">
+            What I offer is not surface level guidance.
+          </p>
+
+          <div style="background: var(--sage-pale); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
+            <p style="font-weight: 600; color: var(--charcoal); margin-bottom: 1rem;">I help you understand:</p>
+            <ul style="padding-left: 1.5rem; margin: 0;">
+              <li style="margin-bottom: 0.5rem;">why certain patterns or karmic patterns are repeating</li>
+              <li style="margin-bottom: 0.5rem;">what phase you are currently in</li>
+              <li style="margin-bottom: 0.5rem;">what is actually driving the situation</li>
+              <li style="margin-bottom: 0.5rem;">what may be required from you at this point</li>
+              <li style="margin-bottom: 0.5rem;">what needs to be done differently</li>
+              <li style="margin-bottom: 0.5rem;">how to respond with clarity instead of confusion</li>
+            </ul>
+          </div>
+
+          <p style="margin-bottom: 1.5rem;">
+            At a deeper level, my work is about awareness.
+          </p>
+
+          <p style="margin-bottom: 1.5rem;">
+            Because real change does not come from being told what to do.
+          </p>
+
+          <p style="margin-bottom: 1.5rem; font-style: italic; color: var(--charcoal);">
+            It comes when you see something so clearly that you cannot go back to responding in the same way.
+          </p>
+
+          <p style="margin-bottom: 0;">
+            I work with a limited number of people so that each session is focused, prepared, and specific.
+          </p>
+
+        </div>
+
+        <button class="btn btn-purple btn-block" id="closeAboutModalBtn" style="margin-top: 2rem;">
+          Close <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
 
     <section id="offerings"
       style="background: white; border-top: 1px solid var(--sage-pale); border-bottom: 1px solid var(--sage-pale);">
@@ -746,31 +967,35 @@
         <div class="testimonials-grid">
           <div class="testimonial">
             <i class="fas fa-quote-left"></i>
-            <h5>  Gave me clarity and real direction. </h5>
-            <p>"The insights were deep, thoughtful, and genuinely helpful. I was able to understand my situation much more clearly."</p>
+            <h5> Gave me clarity and real direction. </h5>
+            <p>"The insights were deep, thoughtful, and genuinely helpful. I was able to understand my situation much
+              more clearly."</p>
             <h4>K. Goyal, Brampton</h4>
           </div>
           <div class="testimonial">
             <i class="fas fa-quote-left"></i>
-            <h5>  Accurate, practical, and easy to apply. </h5>
-            <p>"She looks beyond the chart and explains patterns in a way that actually makes sense. Her guidance is simple and effective."</p>
+            <h5> Accurate, practical, and easy to apply. </h5>
+            <p>"She looks beyond the chart and explains patterns in a way that actually makes sense. Her guidance is
+              simple and effective."</p>
             <h4>M. Agarwal, New Delhi</h4>
           </div>
           <div class="testimonial">
             <i class="fas fa-quote-left"></i>
-            <h5>  Changed how I approached relationships. </h5>
-            <p>"Her guidance helped me shift my perspective and make better decisions. It made a real difference in my life."</p>
+            <h5> Changed how I approached relationships. </h5>
+            <p>"Her guidance helped me shift my perspective and make better decisions. It made a real difference in my
+              life."</p>
             <h4> J. G. Mutreja, Los Angeles</h4>
           </div>
           <div class="testimonial">
             <i class="fas fa-quote-left"></i>
-            <h5>  Insightful and grounded.” </h5>
-            <p>"Her understanding of patterns and timing is strong. Each session leaves you with clarity and a sense of direction."</p>
+            <h5> Insightful and grounded.” </h5>
+            <p>"Her understanding of patterns and timing is strong. Each session leaves you with clarity and a sense of
+              direction."</p>
             <h4>M. Duvvedi, Chandigarh</h4>
           </div>
           <div class="testimonial">
             <i class="fas fa-quote-left"></i>
-            <h5>  Gets to the root quickly. </h5>
+            <h5> Gets to the root quickly. </h5>
             <p>"She identifies the core issue without much explanation and gives clear, practical guidance."</p>
             <h4>S. C. Singhal, New Delhi</h4>
           </div>
@@ -783,7 +1008,8 @@
         <div class="contact-info">
           <h2 class="section-title">Connect With Us</h2>
           <p style="font-size: 1.1rem; color: #5a6b6b; margin-left: 1.8rem; margin-top: 1rem;">
-            Have questions about your spiritual journey or which offering to choose? Reach out to our guide for a 15-minutes consultationand we
+            Have questions about your spiritual journey or which offering to choose? Reach out to our guide for a
+            15-minutes consultationand we
             will help direct your path.
           </p>
         </div>
@@ -822,7 +1048,8 @@
       <ul class="cart-items" id="cartItemsList"></ul>
       <div class="cart-total" id="cartTotal">Total: $0</div>
       <!-- Removed checkout button - each item now has its own payment link -->
-      <p style="margin-top:1rem; font-size:0.85rem; color: var(--sage);">Click on any offering above to proceed with payment.</p>
+      <p style="margin-top:1rem; font-size:0.85rem; color: var(--sage);">Click on any offering above to proceed with
+        payment.</p>
     </div>
   </div>
 
@@ -941,6 +1168,55 @@
         list.innerHTML = html;
         totalSpan.innerText = `Total: $${total}`;
 
+        // ------ ABOUT ME MODAL ------
+        (function () {
+          const aboutBtn = document.getElementById('aboutMoreBtn');
+          const aboutModal = document.getElementById('aboutModalOverlay');
+          const closeAboutModal = document.getElementById('closeAboutModal');
+          const closeAboutModalBtn = document.getElementById('closeAboutModalBtn');
+
+          function openAboutModal() {
+            if (aboutModal) {
+              aboutModal.classList.add('active');
+              document.body.style.overflow = 'hidden';
+            }
+          }
+
+          function closeAboutModalFunc() {
+            if (aboutModal) {
+              aboutModal.classList.remove('active');
+              document.body.style.overflow = '';
+            }
+          }
+
+          if (aboutBtn) {
+            aboutBtn.addEventListener('click', openAboutModal);
+          }
+
+          if (closeAboutModal) {
+            closeAboutModal.addEventListener('click', closeAboutModalFunc);
+          }
+
+          if (closeAboutModalBtn) {
+            closeAboutModalBtn.addEventListener('click', closeAboutModalFunc);
+          }
+
+          if (aboutModal) {
+            aboutModal.addEventListener('click', function (e) {
+              if (e.target === aboutModal) {
+                closeAboutModalFunc();
+              }
+            });
+          }
+
+          // Close modal with Escape key
+          document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && aboutModal && aboutModal.classList.contains('active')) {
+              closeAboutModalFunc();
+            }
+          });
+        })();
+
         document.querySelectorAll('.remove-item').forEach(btn => {
           btn.addEventListener('click', (e) => {
             const id = Number(btn.dataset.id);
@@ -1003,7 +1279,7 @@
             const offeringCard = btn.closest('.offering-card');
             const offeringId = Number(offeringCard.dataset.id);
             const offering = offerings.find(o => o.id === offeringId);
-            
+
             cart.push({
               id: Date.now() + Math.random(),
               courseId: offering.id,
@@ -1041,7 +1317,7 @@
         });
 
         if (success) {
-          feedback.innerHTML = '✨ Thank you! Your energy has been received.';
+          feedback.innerHTML = '✨ Thank you! Your message has been received.';
           document.getElementById('contactName').value = '';
           document.getElementById('contactEmail').value = '';
           document.getElementById('contactMsg').value = '';
