@@ -711,6 +711,25 @@
         transform: translateY(0) scale(1);
       }
     }
+
+    #aboutExtended {
+      animation: fadeSlideDown 0.5s ease-out;
+      overflow: hidden;
+    }
+
+    @keyframes fadeSlideDown {
+      from {
+        opacity: 0;
+        max-height: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        max-height: 3000px;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 
@@ -761,7 +780,7 @@
         <h2 class="section-title">About Me</h2>
         <div class="about-me-wrapper" style="max-width: 800px; margin: 0 auto;">
 
-          <!-- Profile Image (optional) 
+          <!-- Profile Image (optional)
           <div style="text-align: center; margin-bottom: 2rem;">
             <div class="about-me-img"
               style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden; margin: 0 auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
@@ -769,167 +788,157 @@
             </div>
             <h3 style="margin-top: 1rem; color: var(--charcoal); font-size: 1.5rem;">Your Name</h3>
             <p style="color: var(--purple); font-weight: 500;">Spiritual Guide & Astrologer</p>
-          </div>
-          -->
+          </div>  -->
 
-          <!-- Brief Explanation -->
+          <!-- About Content Box -->
           <div class="about-me-brief"
             style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
-            <p style="font-size: 1.1rem; color: #5a6b6b; line-height: 1.8; margin: 0;">
-              My work is rooted in understanding patterns, timing, and lived experience, using astrology and intuitive
-              insight to bring clarity to the deeper themes shaping life. At some point, most of us begin to notice that
-              life does not unfold randomly. Certain experiences repeat, and some phases feel difficult to understand
-              even when we are trying to move forward.
-            </p>
+
+            <!-- Summary -->
+            <div id="aboutSummary" style="font-size: 1.1rem; color: #5a6b6b; line-height: 1.9;">
+              <p style="margin-bottom: 1.5rem;">
+                My work is rooted in understanding patterns, timing, and lived experience, using astrology and intuitive
+                insight to bring clarity to the deeper themes shaping life.
+              </p>
+              <p style="margin-bottom: 1.5rem;">
+                At some point, most of us begin to notice that life does not unfold randomly. Certain experiences
+                repeat, and some phases feel difficult to understand even when we are trying to move forward.
+              </p>
+              <p style="margin-bottom: 1.5rem;">
+                This question has been central to my own life as well. Why do certain experiences repeat, even when we
+                are trying to move forward, and what are they asking us to understand?
+              </p>
+              <p style="margin-bottom: 0;">
+                Over time, I found that astrology is not just about prediction. It is a way to understand the pattern
+                behind a situation. When you begin to see the pattern, things start to make sense.
+              </p>
+              <p style="margin-bottom: 0;">
+                My work is not about fixing situations from the outside. It is about helping you understand what your
+                life is trying to show you, so that your response and choices begin to shift.
+              </p>
+              <p>
+                And often, when that awareness comes, healing begins on its own.
+              </p>
+            </div>
 
             <!-- Learn More Button -->
             <button class="btn btn-outline btn-block" id="aboutMoreBtn" style="margin-top: 1.5rem;">
-              Learn more about my journey <i class="fas fa-arrow-right"></i>
+              Learn more <i class="fas fa-chevron-down"></i>
             </button>
+
+            <!-- Extended Content (Hidden by Default) -->
+            <div id="aboutExtended"
+              style="display: none; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--sage-pale); font-size: 1.05rem; color: #5a6b6b; line-height: 1.9;">
+
+              <p style="margin-bottom: 1.5rem;">
+                My search for these answers led me deeper into astrology, not just as a subject, but as a way to
+                understand the underlying structure of life.
+              </p>
+
+              <p style="margin-bottom: 1.5rem;">
+                Alongside this, I became aware that I naturally perceive things beyond what is immediately visible. Over
+                time, this intuitive and almost psychic sensitivity became an integral part of how I understand
+                patterns, situations, and people.
+              </p>
+
+              <p style="margin-bottom: 1.5rem;">
+                At the same time, I come from a strong academic background in mathematics, statistics, and computer
+                science, and I have worked in corporate and government environments. This keeps my approach grounded. I
+                do not rely on blind belief. I need to understand what I am seeing.
+              </p>
+
+              <p style="margin-bottom: 1.5rem;">
+                But what has shaped my work the most is my own life.
+              </p>
+
+              <p style="margin-bottom: 1.5rem;">
+                I have gone through phases that brought emotional intensity, instability, health challenges, and
+                situations that did not make sense even when I was doing everything right. Those phases forced me to
+                question everything I thought I knew about effort, control, and outcome.
+              </p>
+
+              <p style="margin-bottom: 1.5rem;">
+                That is where my understanding deepened.
+              </p>
+
+              <p style="margin-bottom: 1.5rem;">
+                I began to see that what we go through is not random. There are patterns. There is timing. There are
+                karmic imprints that continue to play out until something is seen and understood.
+              </p>
+
+              <p style="margin-bottom: 1.5rem;">
+                For me, astrology is not about predicting events or offering quick remedies.
+              </p>
+
+              <p style="margin-bottom: 1.5rem;">
+                It is about understanding the theme behind the situation.
+              </p>
+
+              <p style="margin-bottom: 1.5rem;">
+                When you understand the theme and the underlying karmic pattern, things begin to make sense. You start
+                to see what is repeating, what is actually driving the situation, and what needs to shift.
+              </p>
+
+              <p style="margin-bottom: 1.5rem;">
+                My work is not about fixing your life from the outside.
+              </p>
+
+              <p style="margin-bottom: 1.5rem;">
+                It is about helping you see what your life is trying to show you.
+              </p>
+
+              <p style="margin-bottom: 1.5rem;">
+                Because once you see it clearly, your response changes. Your choices change. And that is what begins to
+                shift the pattern.
+              </p>
+
+              <p style="margin-bottom: 1.5rem;">
+                And often, when something is seen with that level of clarity, healing does not have to be forced. It
+                begins on its own.
+              </p>
+
+              <p style="margin-bottom: 1.5rem;">
+                I do use astrology, numerology, and other systems, but I do not follow a fixed method. I use what is
+                needed to understand the situation fully, along with my intuitive reading.
+              </p>
+
+              <p style="margin-bottom: 1.5rem;">
+                What I offer is not surface level guidance.
+              </p>
+
+              <div style="background: var(--sage-pale); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                <p style="font-weight: 600; color: var(--charcoal); margin-bottom: 1rem;">I help you understand:</p>
+                <ul style="padding-left: 1.5rem; margin: 0;">
+                  <li style="margin-bottom: 0.5rem;">why certain patterns or karmic patterns are repeating</li>
+                  <li style="margin-bottom: 0.5rem;">what phase you are currently in</li>
+                  <li style="margin-bottom: 0.5rem;">what is actually driving the situation</li>
+                  <li style="margin-bottom: 0.5rem;">what may be required from you at this point</li>
+                  <li style="margin-bottom: 0.5rem;">what needs to be done differently</li>
+                  <li style="margin-bottom: 0.5rem;">how to respond with clarity instead of confusion</li>
+                </ul>
+              </div>
+
+              <p style="margin-bottom: 1.5rem;">
+                At a deeper level, my work is about awareness.
+              </p>
+
+              <p style="margin-bottom: 1.5rem;">
+                Because real change does not come from being told what to do.
+              </p>
+
+              <p style="margin-bottom: 0; font-style: italic; color: var(--charcoal);">
+                It comes when you see something so clearly that you cannot go back to responding in the same way.
+              </p>
+
+              <p style="margin-top: 1.5rem; margin-bottom: 0;">
+                I work with a limited number of people so that each session is focused, prepared, and specific.
+              </p>
+
+            </div>
           </div>
         </div>
       </div>
     </section>
-
-    <!-- About Me Modal -->
-    <div class="modal-overlay" id="aboutModalOverlay">
-      <div class="modal" style="max-width: 800px; max-height: 80vh; overflow-y: auto;">
-        <span class="close-btn" id="closeAboutModal">&times;</span>
-
-        <h2
-          style="font-size: 2rem; margin-bottom: 1.5rem; border-left: 4px solid var(--purple); padding-left: 1rem; color: var(--charcoal);">
-          About Me
-        </h2>
-
-        <div style="font-size: 1.05rem; color: #5a6b6b; line-height: 1.9;">
-
-          <p style="margin-bottom: 1.5rem;">
-            My work is rooted in understanding patterns, timing, and lived experience, using astrology and intuitive
-            insight to bring clarity to the deeper themes shaping life.
-          </p>
-
-          <p style="margin-bottom: 1.5rem;">
-            At some point, most of us begin to notice that life does not unfold randomly. Certain experiences repeat,
-            and some phases feel difficult to understand even when we are trying to move forward.
-          </p>
-
-          <p style="margin-bottom: 1.5rem;">
-            This question has been central to my own life as well. Why do certain experiences repeat, even when we
-            are trying to move forward, and what are they asking us to understand?
-          </p>
-
-          <p style="margin-bottom: 1.5rem;">
-            My search for these answers led me deeper into astrology, not just as a subject, but as a way to understand
-            the underlying structure of life.
-          </p>
-
-          <p style="margin-bottom: 1.5rem;">
-            Alongside this, I became aware that I naturally perceive things beyond what is immediately visible. Over
-            time, this intuitive and almost psychic sensitivity became an integral part of how I understand patterns,
-            situations, and people.
-          </p>
-
-          <p style="margin-bottom: 1.5rem;">
-            At the same time, I come from a strong academic background in mathematics, statistics, and computer science,
-            and I have worked in corporate and government environments. This keeps my approach grounded. I do not rely
-            on blind belief. I need to understand what I am seeing.
-          </p>
-
-          <p style="margin-bottom: 1.5rem;">
-            But what has shaped my work the most is my own life.
-          </p>
-
-          <p style="margin-bottom: 1.5rem;">
-            I have gone through phases that brought emotional intensity, instability, health challenges, and situations
-            that did not make sense even when I was doing everything right. Those phases forced me to question
-            everything
-            I thought I knew about effort, control, and outcome.
-          </p>
-
-          <p style="margin-bottom: 1.5rem;">
-            That is where my understanding deepened.
-          </p>
-
-          <p style="margin-bottom: 1.5rem;">
-            I began to see that what we go through is not random. There are patterns. There is timing. There are karmic
-            imprints that continue to play out until something is seen and understood.
-          </p>
-
-          <p style="margin-bottom: 1.5rem;">
-            For me, astrology is not about predicting events or offering quick remedies.
-          </p>
-
-          <p style="margin-bottom: 1.5rem;">
-            It is about understanding the theme behind the situation.
-          </p>
-
-          <p style="margin-bottom: 1.5rem;">
-            When you understand the theme and the underlying karmic pattern, things begin to make sense. You start to
-            see what is repeating, what is actually driving the situation, and what needs to shift.
-          </p>
-
-          <p style="margin-bottom: 1.5rem;">
-            My work is not about fixing your life from the outside.
-          </p>
-
-          <p style="margin-bottom: 1.5rem;">
-            It is about helping you see what your life is trying to show you.
-          </p>
-
-          <p style="margin-bottom: 1.5rem;">
-            Because once you see it clearly, your response changes. Your choices change. And that is what begins to
-            shift the pattern.
-          </p>
-
-          <p style="margin-bottom: 1.5rem;">
-            And often, when something is seen with that level of clarity, healing does not have to be forced. It begins
-            on its own.
-          </p>
-
-          <p style="margin-bottom: 1.5rem;">
-            I do use astrology, numerology, and other systems, but I do not follow a fixed method. I use what is needed
-            to understand the situation fully, along with my intuitive reading.
-          </p>
-
-          <p style="margin-bottom: 1.5rem;">
-            What I offer is not surface level guidance.
-          </p>
-
-          <div style="background: var(--sage-pale); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
-            <p style="font-weight: 600; color: var(--charcoal); margin-bottom: 1rem;">I help you understand:</p>
-            <ul style="padding-left: 1.5rem; margin: 0;">
-              <li style="margin-bottom: 0.5rem;">why certain patterns or karmic patterns are repeating</li>
-              <li style="margin-bottom: 0.5rem;">what phase you are currently in</li>
-              <li style="margin-bottom: 0.5rem;">what is actually driving the situation</li>
-              <li style="margin-bottom: 0.5rem;">what may be required from you at this point</li>
-              <li style="margin-bottom: 0.5rem;">what needs to be done differently</li>
-              <li style="margin-bottom: 0.5rem;">how to respond with clarity instead of confusion</li>
-            </ul>
-          </div>
-
-          <p style="margin-bottom: 1.5rem;">
-            At a deeper level, my work is about awareness.
-          </p>
-
-          <p style="margin-bottom: 1.5rem;">
-            Because real change does not come from being told what to do.
-          </p>
-
-          <p style="margin-bottom: 1.5rem; font-style: italic; color: var(--charcoal);">
-            It comes when you see something so clearly that you cannot go back to responding in the same way.
-          </p>
-
-          <p style="margin-bottom: 0;">
-            I work with a limited number of people so that each session is focused, prepared, and specific.
-          </p>
-
-        </div>
-
-        <button class="btn btn-purple btn-block" id="closeAboutModalBtn" style="margin-top: 2rem;">
-          Close <i class="fas fa-times"></i>
-        </button>
-      </div>
-    </div>
 
     <section id="offerings"
       style="background: white; border-top: 1px solid var(--sage-pale); border-bottom: 1px solid var(--sage-pale);">
@@ -1079,7 +1088,6 @@
           contactTemplateId: 'template_hypt78z',
           purchaseTemplateId: 'template_n5cfbks'
         },
-        // Direct Stripe Payment Links - replace these with your actual payment links
         stripePaymentLinks: {
           1: 'https://buy.stripe.com/9B6bIU0lBbvSabPczu5os00',
           2: 'https://buy.stripe.com/6oU3co2tJ2Zmes5fLG5os01',
@@ -1087,8 +1095,6 @@
         },
         recipientEmail: 'innerlightbackend@gmail.com'
       };
-
-      // Test button removed - no longer needed
 
       // Initialize EmailJS
       emailjs.init(CONFIG.emailjs.publicKey);
@@ -1222,7 +1228,36 @@
             }
           });
         });
+        // ------ ABOUT ME EXPAND/COLLAPSE ------
+        const aboutBtn = document.getElementById('aboutMoreBtn');
+        const aboutExtended = document.getElementById('aboutExtended');
+        const aboutSummary = document.getElementById('aboutSummary');
 
+        if (aboutBtn && aboutExtended) {
+          aboutBtn.addEventListener('click', function () {
+            if (aboutExtended.style.display === 'none' || aboutExtended.style.display === '') {
+              // Hide summary and show extended content
+              if (aboutSummary) {
+                aboutSummary.style.display = 'none';
+              }
+              aboutExtended.style.display = 'block';
+              aboutBtn.innerHTML = 'Show less <i class="fas fa-chevron-up"></i>';
+
+              // Smooth scroll to extended content
+              aboutExtended.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+              // Show summary and hide extended content
+              if (aboutSummary) {
+                aboutSummary.style.display = 'block';
+              }
+              aboutExtended.style.display = 'none';
+              aboutBtn.innerHTML = 'Learn more <i class="fas fa-chevron-down"></i>';
+
+              // Smooth scroll back to the button
+              aboutBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+          });
+        }
         // Add to cart buttons (first button in offering details)
         document.querySelectorAll('.offering-details .btn-purple').forEach(btn => {
           btn.addEventListener('click', (e) => {
