@@ -1169,54 +1169,47 @@
         totalSpan.innerText = `Total: $${total}`;
 
         // ------ ABOUT ME MODAL ------
-        (function () {
-          const aboutBtn = document.getElementById('aboutMoreBtn');
-          const aboutModal = document.getElementById('aboutModalOverlay');
-          const closeAboutModal = document.getElementById('closeAboutModal');
-          const closeAboutModalBtn = document.getElementById('closeAboutModalBtn');
+        const aboutBtn = document.getElementById('aboutMoreBtn');
+        const aboutModal = document.getElementById('aboutModalOverlay');
+        const closeAboutModal = document.getElementById('closeAboutModal');
+        const closeAboutModalBtn = document.getElementById('closeAboutModalBtn');
 
-          function openAboutModal() {
-            if (aboutModal) {
-              aboutModal.classList.add('active');
-              document.body.style.overflow = 'hidden';
-            }
-          }
+        if (aboutBtn) {
+          aboutBtn.addEventListener('click', () => {
+            aboutModal.classList.add('active');
+            // Prevent body scrolling when modal is open
+            document.body.style.overflow = 'hidden';
+          });
+        }
 
-          function closeAboutModalFunc() {
-            if (aboutModal) {
-              aboutModal.classList.remove('active');
-              document.body.style.overflow = '';
-            }
-          }
+        function closeAboutModalFunc() {
+          aboutModal.classList.remove('active');
+          // Restore body scrolling
+          document.body.style.overflow = '';
+        }
 
-          if (aboutBtn) {
-            aboutBtn.addEventListener('click', openAboutModal);
-          }
+        if (closeAboutModal) {
+          closeAboutModal.addEventListener('click', closeAboutModalFunc);
+        }
 
-          if (closeAboutModal) {
-            closeAboutModal.addEventListener('click', closeAboutModalFunc);
-          }
+        if (closeAboutModalBtn) {
+          closeAboutModalBtn.addEventListener('click', closeAboutModalFunc);
+        }
 
-          if (closeAboutModalBtn) {
-            closeAboutModalBtn.addEventListener('click', closeAboutModalFunc);
-          }
-
-          if (aboutModal) {
-            aboutModal.addEventListener('click', function (e) {
-              if (e.target === aboutModal) {
-                closeAboutModalFunc();
-              }
-            });
-          }
-
-          // Close modal with Escape key
-          document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape' && aboutModal && aboutModal.classList.contains('active')) {
+        if (aboutModal) {
+          aboutModal.addEventListener('click', (e) => {
+            if (e.target === aboutModal) {
               closeAboutModalFunc();
             }
           });
-        })();
+        }
 
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && aboutModal && aboutModal.classList.contains('active')) {
+            closeAboutModalFunc();
+          }
+        });
         document.querySelectorAll('.remove-item').forEach(btn => {
           btn.addEventListener('click', (e) => {
             const id = Number(btn.dataset.id);
